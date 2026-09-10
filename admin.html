@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach Admin Dashboard | GRS Career Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #0C0E0D;
+      --surface: #141716;
+      --card: #1A1E1C;
+      --border: rgba(255, 255, 255, 0.08);
+      --neon-lime: #CCFF00;
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --coral: #FF5A43;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px 24px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Top Bar */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--neon-lime);
+      color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .brand p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-refresh {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #FFF;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-site {
+      background: var(--neon-lime);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Metrics Summary Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .metric-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #FFF;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--neon-lime);
+    }
+
+    /* Leads Table Section */
+    .leads-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-title-bar {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title-bar h2 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .badge-live {
+      background: rgba(204, 255, 0, 0.12);
+      color: var(--neon-lime);
+      border: 1px solid rgba(204, 255, 0, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .leads-list {
+      display: flex;
+      flex-direction: column;
+      divide-y: 1px solid var(--border);
+    }
+
+    .lead-item {
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr auto;
+      align-items: center;
+      gap: 20px;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lead-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lead-profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .lead-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFF;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .lead-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFF;
+    }
+
+    .lead-email {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .lead-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .meta-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #FFF;
+      width: fit-content;
+    }
+
+    .meta-challenge {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .lead-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .lead-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-wa {
+      background: #25D366;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-wa:hover { background: #20BA5A; }
+
+    .status-select {
+      background: var(--card);
+      color: #FFF;
+      border: 1px solid var(--border);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      color: var(--border);
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 800px) {
+      .lead-item { grid-template-columns: 1fr; gap: 12px; }
+      .lead-actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-logo">GRS</div>
+        <div>
+          <h1>Coach Lead Management Portal</h1>
+          <p>Real-time intake from 60-Second Diagnostic Quiz &bull; Coach G. Ravi Sankar</p>
+        </div>
+      </div>
+
+      <div class="header-btns">
+        <button class="btn-refresh" id="refreshBtn">
+          <i data-lucide="refresh-cw"></i> Refresh Leads
+        </button>
+        <a href="http://localhost:3000/" target="_blank" class="btn-site">
+          <span>Open Live Website</span> <i data-lucide="external-link"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span class="metric-title">Total Prospective Students</span>
+        <span class="metric-val" id="totalLeadsCount">0</span>
+        <span class="metric-sub">&bull; In Database</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">Action Required (New)</span>
+        <span class="metric-val" id="newLeadsCount" style="color: var(--neon-lime);">0</span>
+        <span class="metric-sub">&bull; Waiting for 15-Min Call</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">Target Student Stage</span>
+        <span class="metric-val" style="font-size: 20px; margin-top: 10px;">Class 9-12 &bull; Grads</span>
+        <span class="metric-sub">&bull; 5-D Career Assessment</span>
+      </div>
+    </div>
+
+    <!-- Leads List Table -->
+    <div class="leads-section">
+      <div class="section-title-bar">
+        <h2>Submitted Diagnostic Leads</h2>
+        <span class="badge-live">&#9679; LIVE SYNC</span>
+      </div>
+
+      <div class="leads-list" id="leadsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    async function loadLeads() {
+      const container = document.getElementById('leadsContainer');
+      const totalCount = document.getElementById('totalLeadsCount');
+      const newCount = document.getElementById('newLeadsCount');
+
+      try {
+        const res = await fetch('/api/leads');
+        const leads = await res.json();
+
+        if (!Array.isArray(leads) || leads.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i data-lucide="inbox"></i>
+              <h3>No leads submitted yet</h3>
+              <p>When students complete the 60-second quiz on the website, they will appear here instantly.</p>
+            </div>
+          `;
+          totalCount.innerText = '0';
+          newCount.innerText = '0';
+          if (window.lucide) window.lucide.createIcons();
+          return;
+        }
+
+        totalCount.innerText = leads.length;
+        newCount.innerText = leads.filter(l => l.status === 'new').length;
+
+        container.innerHTML = leads.map(lead => {
+          const initials = (lead.full_name || 'Student').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          const cleanPhone = (lead.phone_number || '').replace(/[^0-9]/g, '');
+          const waLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent("Hello " + lead.full_name + ", this is Coach G. Ravi Sankar from GRS Career Intelligence. I reviewed your diagnostic responses regarding " + (lead.academic_stage || 'your studies') + ". When would be a good time for our free 15-minute discovery call?")}`;
+          const dateStr = lead.created_at ? new Date(lead.created_at).toLocaleString() : 'Recent';
+
+          return `
+            <div class="lead-item">
+              <div class="lead-profile">
+                <div class="lead-avatar">${initials}</div>
+                <div>
+                  <div class="lead-name">${lead.full_name}</div>
+                  <div class="lead-email">${lead.email} &bull; <strong>${lead.phone_number}</strong></div>
+                </div>
+              </div>
+
+              <div class="lead-meta">
+                <span class="meta-tag">${formatStage(lead.academic_stage)}</span>
+                <span class="meta-challenge">${formatChallenge(lead.primary_challenge)}</span>
+              </div>
+
+              <div class="lead-time">
+                <i data-lucide="clock" style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i>
+                ${dateStr}
+              </div>
+
+              <div class="lead-actions">
+                <a href="${waLink}" target="_blank" class="btn-wa">
+                  <i data-lucide="message-circle"></i> WhatsApp
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+
+      } catch (err) {
+        container.innerHTML = `<div class="empty-state" style="color: #FF5A43;">Failed to load leads from backend server.</div>`;
+      }
+    }
+
+    function formatStage(stage) {
+      if (stage === '910' || stage === 'class_9_10') return 'Class 9-10 (Stream Selection)';
+      if (stage === '1112' || stage === 'class_11_12') return 'Class 11-12 (Entrance & College)';
+      if (stage === 'college') return 'College / Graduate';
+      if (stage === 'parent') return 'Worried Parent';
+      return stage || 'Student';
+    }
+
+    function formatChallenge(challenge) {
+      if (challenge === 'paralysis') return 'Too many options, zero clarity';
+      if (challenge === 'pressure') return 'Family & societal pressure';
+      if (challenge === 'exams' || challenge === 'exam_burnout') return 'Exam burnout & stress';
+      if (challenge === 'future') return 'Fear of dead-end careers';
+      return challenge || 'Career guidance needed';
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadLeads);
+    loadLeads();
+  </script>
+</body>
+</html>

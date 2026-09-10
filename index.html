@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GRS Career Intelligence | IIT-Madras Certified Mentorship</title>
+  <meta name="description" content="Next-generation career counseling for Gen Z and parents. Scientific 5-dimensional assessments, stream selection, and clarity roadmaps by IIT-Madras Certified Coach G. Ravi Sankar." />
+  <meta name="theme-color" content="#080909" />
+
+  <!-- SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080909'/%3E%3Crect x='2' y='2' width='28' height='28' rx='6' fill='none' stroke='%23CCFF00' stroke-width='1.5' stroke-opacity='0.4'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='12' fill='%23CCFF00' letter-spacing='-0.5'%3EGRS%3C/text%3E%3C/svg%3E" />
+
+  <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://localhost:3000/" />
+  <meta property="og:title" content="GRS Career Intelligence | IIT-Madras Certified Mentorship" />
+  <meta property="og:description" content="Scientific 5-dimensional assessments, stream selection, and clarity roadmaps by IIT-Madras Certified Coach G. Ravi Sankar." />
+  <meta property="og:image" content="website_preview.png" />
+  <meta property="og:site_name" content="GRS Career Intelligence" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GRS Career Intelligence | IIT-Madras Certified Mentorship" />
+  <meta name="twitter:description" content="Scientific 5-dimensional assessments, stream selection, and clarity roadmaps by IIT-Madras Certified Coach G. Ravi Sankar." />
+  <meta name="twitter:image" content="website_preview.png" />
+
+  <!-- Fonts: Syne, Space Grotesk, Plus Jakarta Sans, Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Core Libraries: Three.js, Matter.js, GSAP & ScrollTrigger, Lucide Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Custom Magnetic Cursor -->
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Noise & Architectural Grid Overlay (Illoca Style) -->
+  <div class="grid-overlay"></div>
+  <div class="noise-layer"></div>
+
+  <!-- Marginalia Coordinates & Live Status (Illoca style) -->
+  <div class="marginalia top-left">
+    <div class="coord-item"><span>X</span> <span id="coordX">0.00</span></div>
+    <div class="coord-item"><span>Y</span> <span id="coordY">0.00</span></div>
+  </div>
+  <div class="marginalia top-right">
+    <div class="live-pill"><span class="pulse-dot"></span> ADMISSIONS 2026-27 ACTIVE</div>
+  </div>
+  <div class="marginalia bottom-left">
+    <div class="agency-tag">COACH_OS // IIT-MADRAS</div>
+  </div>
+  <div class="marginalia bottom-right">
+    <div class="scroll-cue"><span>SCROLL TO MAP FUTURE</span> <i data-lucide="arrow-down"></i></div>
+  </div>
+
+  <!-- Klausen + Illoca Cinematic Preloader -->
+  <div class="cinematic-loader" id="loader">
+    <div class="loader-aperture">
+      <div class="aperture-ring ring-1"></div>
+      <div class="aperture-ring ring-2"></div>
+      <div class="loader-canvas-wrap">
+        <canvas id="loaderCanvas" width="180" height="180"></canvas>
+      </div>
+    </div>
+    <div class="loader-text-wrap">
+      <div class="loader-brand">G. RAVI SANKAR</div>
+      <div class="loader-tagline">DECODING POTENTIAL &bull; GUIDING MINDS</div>
+      <div class="loader-progress">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-num" id="progressNum">00%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Header / Floating Nav -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo">
+        <div class="logo-box">GRS</div>
+        <div class="logo-details">
+          <span class="logo-name">G. Ravi Sankar</span>
+          <span class="logo-role">IIT-Madras Certified</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#vision" class="nav-item">Vision</a>
+        <a href="#assessment" class="nav-item">5-D Assessment</a>
+        <a href="#physics-section" class="nav-item">Career Physics</a>
+        <a href="#pathways" class="nav-item">Streams</a>
+        <a href="#parent-bridge" class="nav-item">Parent-Teen</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+919490075459" class="quick-call-btn">
+          <i data-lucide="phone-call"></i>
+          <span>+91 9490075459</span>
+        </a>
+        <button class="cta-primary" id="openQuizBtn">
+          <span>Free Diagnostic</span>
+          <div class="btn-arrow"><i data-lucide="arrow-up-right"></i></div>
+        </button>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="brand-logo">
+          <div class="logo-box">GRS</div>
+          <div class="logo-details">
+            <span class="logo-name">G. Ravi Sankar</span>
+            <span class="logo-role">IIT-Madras Certified</span>
+          </div>
+        </div>
+        <button class="drawer-close" id="closeDrawerBtn" aria-label="Close menu">&times;</button>
+      </div>
+      <nav class="drawer-nav">
+        <a href="#vision" class="drawer-link"><span class="drawer-num">01</span> Vision</a>
+        <a href="#assessment" class="drawer-link"><span class="drawer-num">02</span> 5-D Assessment</a>
+        <a href="#physics-section" class="drawer-link"><span class="drawer-num">03</span> Career Physics</a>
+        <a href="#pathways" class="drawer-link"><span class="drawer-num">04</span> Streams</a>
+        <a href="#parent-bridge" class="drawer-link"><span class="drawer-num">05</span> Parent-Teen</a>
+      </nav>
+      <div class="drawer-actions">
+        <a href="tel:+919490075459" class="drawer-call-btn">
+          <i data-lucide="phone-call"></i>
+          <span>Direct Call: +91 9490075459</span>
+        </a>
+        <button class="cta-primary drawer-cta" id="drawerQuizBtn">
+          <span>Start Free Diagnostic</span>
+          <div class="btn-arrow"><i data-lucide="arrow-up-right"></i></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- SECTION 1: HERO (Cinematic 3D & Kinetic Typography) -->
+    <section class="hero-section" id="hero">
+      <!-- Three.js 3D WebGL Canvas for Interactive Career Prism / Compass -->
+      <div class="three-canvas-container" id="threeCanvas"></div>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="badge-neon">NEXT-GEN CAREER INTELLIGENCE</span>
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-stat">150+ Career Streams Mapped</span>
+        </div>
+
+        <h1 class="hero-headline">
+          <div class="headline-row">
+            <span class="word-split">FROM</span>
+            <span class="word-split outline-word">PRESSURE</span>
+          </div>
+          <div class="headline-row">
+            <span class="word-split">TO</span>
+            <span class="word-split highlight-word">PURPOSE.</span>
+          </div>
+        </h1>
+
+        <p class="hero-subtext">
+          Stop navigating existential dread and academic confusion alone. Discover scientific 5-dimensional profiling that decodes your true cognitive strengths, bridges parent-teen expectations, and charts an unshakeable career trajectory.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn-heavy" id="heroStartBtn">
+            <span>Explore Career Engine</span>
+            <div class="btn-pill"><i data-lucide="compass"></i></div>
+          </button>
+          <a href="#assessment" class="btn-ghost">
+            <span>How 5-D Works</span>
+            <i data-lucide="arrow-down-right"></i>
+          </a>
+        </div>
+
+        <!-- Social Proof Floating Bar -->
+        <div class="hero-proof-bar">
+          <div class="proof-item">
+            <span class="proof-num">1,000+</span>
+            <span class="proof-label">Students Guided</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num">98%</span>
+            <span class="proof-label">Clarity Rate (Zero Regret)</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num">5-D</span>
+            <span class="proof-label">Psychometric Accuracy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE EXISTENTIAL DILEMMA & MISSION (Klausen Style) -->
+    <section class="vision-section" id="vision">
+      <div class="section-badge-center">/&emsp;our mission &amp; vision&emsp;/</div>
+      
+      <div class="vision-grid">
+        <div class="vision-lead-card">
+          <div class="card-num">01 // THE REALITY</div>
+          <h2>Today's youth are not just anxious about perfection—they are fighting quiet battles of existence.</h2>
+          <p>Endless social comparison, algorithmic doom-scrolling, and rigid parental expectations leave students feeling constantly evaluated yet deeply misunderstood. We replace cold pressure with empathetic, data-backed direction.</p>
+        </div>
+
+        <div class="vision-metric-cards">
+          <div class="v-card v-card-1">
+            <div class="v-card-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="v-card-metric">78%</div>
+            <div class="v-card-text">Of Gen Z feel paralyzed by career options and pressure to conform.</div>
+          </div>
+          <div class="v-card v-card-2">
+            <div class="v-card-icon"><i data-lucide="shield-alert"></i></div>
+            <div class="v-card-metric">42%</div>
+            <div class="v-card-text">Of university graduates regret their stream choice within the first year.</div>
+          </div>
+          <div class="v-card v-card-3">
+            <div class="v-card-icon"><i data-lucide="sparkles"></i></div>
+            <div class="v-card-metric">100%</div>
+            <div class="v-card-text">Deserve a mentor who walks as a guide on the side, not a lecture from the stage.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: 5-DIMENSIONAL ASSESSMENT ENGINE (Mindler / BetterUp Benchmark) -->
+    <section class="assessment-section" id="assessment">
+      <div class="section-header-wide">
+        <div class="left-header">
+          <span class="section-tag">SCIENTIFIC FRAMEWORK</span>
+          <h2 class="section-title">The 5-Dimensional Profiling Engine</h2>
+        </div>
+        <p class="section-desc">
+          Opinion is cheap; data is definitive. Our assessment evaluates you across 5 critical vectors to pinpoint high-fulfillment careers tailored to your cognitive blueprint.
+        </p>
+      </div>
+
+      <div class="pentagon-interactive-wrap">
+        <div class="dimension-card" data-dim="0">
+          <div class="dim-header">
+            <span class="dim-num">01</span>
+            <div class="dim-icon"><i data-lucide="brain"></i></div>
+          </div>
+          <h3>Aptitude &amp; Logic</h3>
+          <p>Decodes numerical, spatial, linguistic, and analytical cognitive strengths.</p>
+          <div class="dim-footer"><span>Matches 40+ Analytical Fields</span> &rarr;</div>
+        </div>
+
+        <div class="dimension-card" data-dim="1">
+          <div class="dim-header">
+            <span class="dim-num">02</span>
+            <div class="dim-icon"><i data-lucide="user-check"></i></div>
+          </div>
+          <h3>Personality Traits</h3>
+          <p>Measures work environment compatibility, leadership style, and resilience.</p>
+          <div class="dim-footer"><span>Big-5 Psychometrics</span> &rarr;</div>
+        </div>
+
+        <div class="dimension-card" data-dim="2">
+          <div class="dim-header">
+            <span class="dim-num">03</span>
+            <div class="dim-icon"><i data-lucide="flame"></i></div>
+          </div>
+          <h3>Genuine Interests</h3>
+          <p>Identifies deep intellectual curiosities that drive long-term career stamina.</p>
+          <div class="dim-footer"><span>Holland RIASEC Alignment</span> &rarr;</div>
+        </div>
+
+        <div class="dimension-card" data-dim="3">
+          <div class="dim-header">
+            <span class="dim-num">04</span>
+            <div class="dim-icon"><i data-lucide="compass"></i></div>
+          </div>
+          <h3>Orientation Style</h3>
+          <p>Determines whether you thrive as a builder, strategist, investigator, or creator.</p>
+          <div class="dim-footer"><span>Role Execution Profiling</span> &rarr;</div>
+        </div>
+
+        <div class="dimension-card" data-dim="4">
+          <div class="dim-header">
+            <span class="dim-num">05</span>
+            <div class="dim-icon"><i data-lucide="heart-pulse"></i></div>
+          </div>
+          <h3>Emotional Quotient</h3>
+          <p>Calculates stress handling, empathy, interpersonal dynamics, and self-awareness.</p>
+          <div class="dim-footer"><span>Crisis &amp; Pressure Mastery</span> &rarr;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE CAREER PHYSICS PLAYGROUND (Matter.js 2D Rigid-Body Physics) -->
+    <section class="physics-section" id="physics-section">
+      <div class="physics-header">
+        <div class="physics-badge">INTERACTIVE PHYSICS PLAYGROUND</div>
+        <h2>Drag, Fling &amp; Explore Careers in Gravity</h2>
+        <p>Real rigid-body physics. Grab any of the bouncing badges, throw them across the screen, and see how different disciplines align.</p>
+      </div>
+
+      <!-- Physics Canvas Container -->
+      <div class="physics-canvas-container" id="physicsCanvas">
+        <div class="physics-instructions">
+          <i data-lucide="grab"></i> Click &amp; Drag badges &bull; Feel the bounce &amp; kinetic collisions
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: TARGETED STREAMS & ROADMAPS (Grades 9-12 & Grads) -->
+    <section class="pathways-section" id="pathways">
+      <div class="section-header-wide">
+        <div class="left-header">
+          <span class="section-tag">TARGETED ROADMAPS</span>
+          <h2 class="section-title">Where Do You Stand Right Now?</h2>
+        </div>
+        <p class="section-desc">Tailored strategies designed for critical decision milestones in a student's journey.</p>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="tab-910">Class 9 &amp; 10: Stream Selection</button>
+          <button class="tab-btn" data-tab="tab-1112">Class 11 &amp; 12: College Strategy</button>
+          <button class="tab-btn" data-tab="tab-grads">College &amp; Early Career Pivot</button>
+        </div>
+
+        <div class="tab-content active" id="tab-910">
+          <div class="pathway-card-grid">
+            <div class="pathway-detail">
+              <div class="path-badge">CRITICAL DECISION POINT</div>
+              <h3>Stream Choice Without Regret</h3>
+              <p>Stop choosing Science just because your neighbor did, or Humanities because you dislike Math. We objectively evaluate whether <strong>PCM, PCB, Commerce, or Integrated Humanities</strong> aligns with your brain's natural cognitive hardwiring.</p>
+              <ul class="path-checklist">
+                <li><i data-lucide="check-circle-2"></i> Cognitive Aptitude Diagnostic</li>
+                <li><i data-lucide="check-circle-2"></i> Eliminating Parent-Student Discord</li>
+                <li><i data-lucide="check-circle-2"></i> Mapping 10-Year Industry Growth Trends</li>
+              </ul>
+            </div>
+            <div class="pathway-interactive-box">
+              <div class="stream-pill-grid">
+                <span class="s-pill">AI &amp; Computer Science</span>
+                <span class="s-pill">Fintech &amp; Quant Finance</span>
+                <span class="s-pill">Biotech &amp; Medicine</span>
+                <span class="s-pill">Product &amp; UI/UX Design</span>
+                <span class="s-pill">Corporate Law &amp; Policy</span>
+                <span class="s-pill">Behavioral Economics</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-1112">
+          <div class="pathway-card-grid">
+            <div class="pathway-detail">
+              <div class="path-badge">COLLEGE &amp; ENTRANCE BLUEPRINT</div>
+              <h3>From Exam Paralysis to Strategic Execution</h3>
+              <p>Whether targeting IIT JEE, NEET, CUET, CLAT, SAT, or premier international universities, we build a risk-diversified admission strategy so you never face a dead end.</p>
+              <ul class="path-checklist">
+                <li><i data-lucide="check-circle-2"></i> 3-Tier College Selection (Dream, Target, Safe)</li>
+                <li><i data-lucide="check-circle-2"></i> Entrance Exam Stress Mitigation</li>
+                <li><i data-lucide="check-circle-2"></i> Scholarship &amp; Profile Building Roadmaps</li>
+              </ul>
+            </div>
+            <div class="pathway-interactive-box">
+              <div class="stat-highlight-box">
+                <div class="stat-num-huge">150+</div>
+                <div class="stat-text-desc">Verified Institutional Roadmaps (India, US, UK, EU, Singapore)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-grads">
+          <div class="pathway-card-grid">
+            <div class="pathway-detail">
+              <div class="path-badge">CAREER LAUNCHPAD &amp; PIVOT</div>
+              <h3>Transition From Degree to High-Fulfillment Industry Roles</h3>
+              <p>Degree in hand but unclear on direction? We help college students and early professionals pivot into high-velocity tech, finance, design, and research domains with targeted upskilling roadmaps.</p>
+              <ul class="path-checklist">
+                <li><i data-lucide="check-circle-2"></i> Resume &amp; Portfolio Strategic Positioning</li>
+                <li><i data-lucide="check-circle-2"></i> 1-on-1 Executive Mentorship</li>
+                <li><i data-lucide="check-circle-2"></i> High-Demand Industry Gap Analysis</li>
+              </ul>
+            </div>
+            <div class="pathway-interactive-box">
+              <div class="stream-pill-grid">
+                <span class="s-pill">Product Management</span>
+                <span class="s-pill">Data Engineering &amp; ML</span>
+                <span class="s-pill">Venture &amp; Private Equity</span>
+                <span class="s-pill">Creative Tech &amp; UI/UX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PARENT-TEEN HARMONY BRIDGE (Interactive Comparison) -->
+    <section class="parent-bridge-section" id="parent-bridge">
+      <div class="section-header-center">
+        <span class="section-tag">COMMUNICATION TRANSFORMATION</span>
+        <h2 class="section-title">The Parent-Teen Bridge</h2>
+        <p class="section-desc">80% of student anxiety comes from fear of disappointing parents. Here is how we transform friction into united momentum.</p>
+      </div>
+
+      <div class="comparison-board">
+        <div class="board-column avoid-column">
+          <div class="column-header">
+            <span class="badge-red">&times; Outdated Approach (Triggers Resistance)</span>
+          </div>
+          <div class="compare-card">
+            <h4>"You're always on your phone."</h4>
+            <p>Shames screen time without addressing emotional overwhelm or digital loneliness.</p>
+          </div>
+          <div class="compare-card">
+            <h4>"What will you do with your life?"</h4>
+            <p>Paralyzes teen decision-making with massive existential pressure.</p>
+          </div>
+          <div class="compare-card">
+            <h4>"Study engineering or you will fail."</h4>
+            <p>Imposes 1990s templates onto 2026's AI-disrupted global economy.</p>
+          </div>
+        </div>
+
+        <div class="board-divider">
+          <div class="divider-circle"><i data-lucide="arrow-right-left"></i></div>
+        </div>
+
+        <div class="board-column adopt-column">
+          <div class="column-header">
+            <span class="badge-green">&check; Compassionate Coach Approach (Builds Trust)</span>
+          </div>
+          <div class="compare-card">
+            <h4>"Let's take an hour to unplug and reconnect."</h4>
+            <p>Creates a safe harbor without judgment or punitive confiscation.</p>
+          </div>
+          <div class="compare-card">
+            <h4>"What problem excites you? How can we support you?"</h4>
+            <p>Sparks curiosity and self-efficacy rooted in the student's values.</p>
+          </div>
+          <div class="compare-card">
+            <h4>"Let's test your natural cognitive strengths scientifically."</h4>
+            <p>Removes subjective friction with an objective, data-driven IIT-Madras roadmap.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: COACH CREDENTIALS & AUTHORITY -->
+    <section class="coach-profile-section" id="coach">
+      <div class="coach-container">
+        <div class="coach-left">
+          <div class="coach-avatar-card">
+            <div class="avatar-monogram">GRS</div>
+            <div class="coach-verified-badge">
+              <i data-lucide="badge-check"></i> IIT-Madras Certified
+            </div>
+          </div>
+        </div>
+
+        <div class="coach-right">
+          <span class="section-tag">LEAD COUNSELOR &amp; FOUNDER</span>
+          <h2>G. Ravi Sankar</h2>
+          <div class="coach-credentials-list">
+            <span>M.Sc., M.Sc., MCA, B.Ed.</span> &bull;
+            <span>IIT-Madras Certified Career Coach</span> &bull;
+            <span>Youth &amp; Parent Alignment Specialist</span>
+          </div>
+
+          <p class="coach-bio">
+            "Every generation faces unique challenges, but Gen Z is fighting unprecedented silent battles against automated algorithms, global comparison, and hyper-perfectionism. As a coach, I don't lecture from an ivory tower. I walk alongside students and families as an objective, empathetic ally to translate confusion into actionable, high-conviction futures."
+          </p>
+
+          <div class="coach-pillars-row">
+            <div class="c-pillar">
+              <div class="cp-num">01</div>
+              <div class="cp-text">Evidence-Based Psychometrics</div>
+            </div>
+            <div class="c-pillar">
+              <div class="cp-num">02</div>
+              <div class="cp-text">Zero-Judgment Safe Space</div>
+            </div>
+            <div class="c-pillar">
+              <div class="cp-num">03</div>
+              <div class="cp-text">Future-Proof Industry Roadmaps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: HIGH CONVERTING LEAD MAGNET / BOOKING BANNER -->
+    <section class="cta-banner-section">
+      <div class="banner-inner">
+        <div class="banner-badge">LIMITED COMPLIMENTARY SESSIONS THIS WEEK</div>
+        <h2>Claim Your Free 15-Minute Career Diagnostic Call</h2>
+        <p>Get immediate, scientific clarity on your top 3 stream matches, remove admission anxiety, and receive an actionable parent-student briefing.</p>
+
+        <div class="banner-actions">
+          <a href="tel:+919490075459" class="btn-call-huge">
+            <i data-lucide="phone"></i>
+            <span>Call / WhatsApp: +91 9490075459</span>
+          </a>
+          <button class="btn-quiz-huge" id="openQuizBtn2">
+            <span>Take 60-Sec Quick Diagnostic</span>
+            <i data-lucide="sparkles"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive 60-Sec Career Quiz Modal -->
+  <div class="quiz-modal-backdrop" id="quizModal">
+    <div class="quiz-modal">
+      <button class="modal-close" id="closeQuizBtn">&times;</button>
+      <div class="modal-header">
+        <span class="modal-tag">60-SECOND DIAGNOSTIC</span>
+        <h3>Find Your Alignment</h3>
+        <p>Answer 3 quick questions to receive personalized stream recommendations.</p>
+      </div>
+
+      <div class="quiz-step" id="qStep1">
+        <h4>1. What is your current grade or academic stage?</h4>
+        <div class="quiz-options">
+          <button class="q-opt" data-val="910">Class 9 or 10 (Stream Selection)</button>
+          <button class="q-opt" data-val="1112">Class 11 or 12 (College &amp; Entrance)</button>
+          <button class="q-opt" data-val="college">College Student or Graduate</button>
+          <button class="q-opt" data-val="parent">Worried Parent Seeking Guidance</button>
+        </div>
+      </div>
+
+      <div class="quiz-step hidden" id="qStep2">
+        <h4>2. What is your biggest challenge right now?</h4>
+        <div class="quiz-options">
+          <button class="q-opt" data-val="paralysis">Too many career options, zero clarity</button>
+          <button class="q-opt" data-val="pressure">Parental/family pressure vs my interests</button>
+          <button class="q-opt" data-val="exams">Entrance exam burnout &amp; anxiety</button>
+          <button class="q-opt" data-val="future">Fear of choosing a dead-end career</button>
+        </div>
+      </div>
+
+      <div class="quiz-step hidden" id="qStep3">
+        <h4>3. Where should Coach G. Ravi Sankar send your diagnostic roadmap?</h4>
+        <form id="leadForm" class="lead-form" novalidate>
+          <div class="form-field">
+            <input type="text" id="leadName" placeholder="Your Full Name" required autocomplete="name" />
+            <span class="field-error" id="nameError"></span>
+          </div>
+          <div class="form-field">
+            <input type="tel" id="leadPhone" placeholder="WhatsApp / Phone Number (e.g. 9490075459)" required autocomplete="tel" />
+            <span class="field-error" id="phoneError"></span>
+          </div>
+          <div class="form-field">
+            <input type="email" id="leadEmail" placeholder="Email Address (e.g. student@gmail.com)" required autocomplete="email" />
+            <span class="field-error" id="emailError"></span>
+          </div>
+          <div id="formGlobalError" class="form-global-error hidden"></div>
+          <button type="submit" class="btn-submit-lead" id="submitLeadBtn">
+            <span>Unlock My 5-D Roadmap</span>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="quiz-step hidden" id="qSuccess">
+        <div class="success-icon"><i data-lucide="check-circle"></i></div>
+        <h4>Diagnostic Submitted!</h4>
+        <p>Coach G. Ravi Sankar has received your response. We will WhatsApp your initial 3-stream diagnostic roadmap within 2 hours.</p>
+        <a href="https://wa.me/919490075459" id="waChatBtn" target="_blank" class="btn-heavy" style="margin-top: 16px; text-decoration: none;">
+          <span>Chat on WhatsApp Directly</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col brand-col">
+        <div class="footer-logo">GRS</div>
+        <h4>G. Ravi Sankar</h4>
+        <p>IIT-Madras Certified Career &amp; Life Coach. Transforming silent anxiety into purposeful futures for Gen Z and their families.</p>
+        <div class="footer-creds">
+          <span>&bull; M.Sc., MCA, B.Ed.</span>
+          <span>&bull; IIT-Madras Certified</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Exploration</h5>
+        <ul>
+          <li><a href="#assessment">5-D Assessment</a></li>
+          <li><a href="#physics-section">Career Physics</a></li>
+          <li><a href="#pathways">Stream Selection</a></li>
+          <li><a href="#parent-bridge">Parent-Teen Bridge</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Direct Connect</h5>
+        <ul>
+          <li><a href="tel:+919490075459">&#128222; +91 9490075459</a></li>
+          <li><a href="mailto:gattaravisankar@gmail.com">&#9993; gattaravisankar@gmail.com</a></li>
+          <li><span>Location: India (Sessions Online &amp; In-Person)</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Operating Principle</h5>
+        <div class="principle-box">
+          "Presence over perfection. A guide on the side, building futures that last."
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <span>&copy; 2026 GRS Career Intelligence. All rights reserved.</span>
+      <span>Designed with Kinetic Physics &amp; WebGL</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
