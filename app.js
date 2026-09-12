@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initPreloader();
   initCoordinateTracker();
-  initCustomCursor();
   initThreeJSScene();
   initMatterPhysics();
   initTabs();
@@ -107,56 +106,7 @@ function initCoordinateTracker() {
 }
 
 /* ==========================================================================
-   3. CUSTOM MAGNETIC CURSOR
-   ========================================================================== */
-function initCustomCursor() {
-  const cursor = document.getElementById('cursor');
-  const trail = document.getElementById('cursorTrail');
-  if (!cursor || !trail) return;
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let trailX = mouseX;
-  let trailY = mouseY;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = `${mouseX}px`;
-    cursor.style.top = `${mouseY}px`;
-  });
-
-  function renderTrail() {
-    trailX += (mouseX - trailX) * 0.2;
-    trailY += (mouseY - trailY) * 0.2;
-    trail.style.left = `${trailX}px`;
-    trail.style.top = `${trailY}px`;
-    requestAnimationFrame(renderTrail);
-  }
-  renderTrail();
-
-  // Hover magnetic effects on buttons and links
-  const interactives = document.querySelectorAll('button, a, .dimension-card, .v-card');
-  interactives.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '24px';
-      cursor.style.height = '24px';
-      cursor.style.background = '#FFFFFF';
-      trail.style.width = '54px';
-      trail.style.height = '54px';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '10px';
-      cursor.style.height = '10px';
-      cursor.style.background = 'var(--neon-lime)';
-      trail.style.width = '38px';
-      trail.style.height = '38px';
-    });
-  });
-}
-
-/* ==========================================================================
-   4. THREE.JS 3D WEBGL CAREER PRISM / GYRO COMPASS
+   3. THREE.JS 3D WEBGL CAREER PRISM / GYRO COMPASS
    ========================================================================== */
 function initThreeJSScene() {
   const container = document.getElementById('threeCanvas');
