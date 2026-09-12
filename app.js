@@ -83,6 +83,9 @@ function initPreloader() {
           onComplete: () => {
             loader.style.display = 'none';
             triggerHeroEntrance();
+            if (window.ScrollTrigger) {
+              window.ScrollTrigger.refresh();
+            }
           }
         });
       }, 300);
@@ -405,33 +408,41 @@ function triggerHeroEntrance() {
 }
 
 function initGSAPScroll() {
+  // Guarantee cards and content are immediately 100% visible
+  const cards = document.querySelectorAll('.dimension-card, .v-card');
+  cards.forEach((c) => {
+    c.style.opacity = '1';
+    c.style.visibility = 'visible';
+  });
+
   if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Stagger dimension cards on scroll
+  // Subtle upward ease without hiding elements or touching opacity
   gsap.from('.dimension-card', {
     scrollTrigger: {
       trigger: '.pentagon-interactive-wrap',
-      start: 'top 80%'
+      start: 'top 90%',
+      once: true
     },
-    y: 40,
-    opacity: 0,
-    stagger: 0.1,
-    duration: 0.8,
-    ease: 'power3.out'
+    y: 20,
+    stagger: 0.08,
+    duration: 0.5,
+    ease: 'power2.out',
+    immediateRender: false
   });
 
-  // Stagger vision metric cards
   gsap.from('.v-card', {
     scrollTrigger: {
       trigger: '.vision-metric-cards',
-      start: 'top 85%'
+      start: 'top 90%',
+      once: true
     },
-    x: 40,
-    opacity: 0,
-    stagger: 0.12,
-    duration: 0.7,
-    ease: 'power2.out'
+    y: 20,
+    stagger: 0.08,
+    duration: 0.5,
+    ease: 'power2.out',
+    immediateRender: false
   });
 }
 
