@@ -1040,9 +1040,18 @@ function initQuizModal() {
 
   // Flows
   const flowAssessment = document.getElementById('quizAssessmentFlow');
-  const flowCalculating = document.getElementById('quizCalculatingFlow');
+  const flowCompiling = document.getElementById('quizCompilingFlow');
   const flowResult = document.getElementById('quizResultFlow');
   const flowPaidSuccess = document.getElementById('quizPaidSuccessFlow');
+
+  // Dossier Compilation Flow Elements (15-20s High-Trust Engine)
+  const compilingStepLabel = document.getElementById('compilingStepLabel');
+  const compilingPct = document.getElementById('compilingPct');
+  const compilingProgressBar = document.getElementById('compilingProgressBar');
+  const compStage1 = document.getElementById('compStage1');
+  const compStage2 = document.getElementById('compStage2');
+  const compStage3 = document.getElementById('compStage3');
+  const compStage4 = document.getElementById('compStage4');
 
   // Flow 1 Elements
   const qCurrentNum = document.getElementById('qCurrentNum');
@@ -1088,6 +1097,19 @@ function initQuizModal() {
   let archetypeScores = { Builder: 0, Investigator: 0, Creator: 0, Strategist: 0, Supporter: 0 };
   let activeProfile = null;
   let verifiedPaymentData = null;
+  let compilingInterval = null;
+  let compilingTimeout = null;
+
+  function cancelCompilation() {
+    if (compilingInterval) {
+      clearInterval(compilingInterval);
+      compilingInterval = null;
+    }
+    if (compilingTimeout) {
+      clearTimeout(compilingTimeout);
+      compilingTimeout = null;
+    }
+  }
 
   // Open & Close Handlers
   openBtns.forEach((btn) => {
@@ -1108,6 +1130,7 @@ function initQuizModal() {
 
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
+      cancelCompilation();
       quizModal.classList.remove('open');
     });
   }
@@ -1116,18 +1139,20 @@ function initQuizModal() {
   if (quizModal) {
     quizModal.addEventListener('click', (e) => {
       if (e.target === quizModal) {
+        cancelCompilation();
         quizModal.classList.remove('open');
       }
     });
   }
 
   function resetAndOpenQuiz() {
+    cancelCompilation();
     currentQuestionIdx = 0;
     archetypeScores = { Builder: 0, Investigator: 0, Creator: 0, Strategist: 0, Supporter: 0 };
     activeProfile = null;
 
     if (flowAssessment) flowAssessment.classList.remove('hidden');
-    if (flowCalculating) flowCalculating.classList.add('hidden');
+    if (flowCompiling) flowCompiling.classList.add('hidden');
     if (flowResult) flowResult.classList.add('hidden');
     if (flowPaidSuccess) flowPaidSuccess.classList.add('hidden');
 
@@ -1245,11 +1270,79 @@ function initQuizModal() {
     poly.setAttribute('points', pts);
   }
 
+  function runCompilationSequence(onComplete) {
+    cancelCompilation();
+
+    const totalDurationMs = 17500; // 17.5 seconds (in the 15-20s sweet spot)
+    const startTime = Date.now();
+
+    const stages = [compStage1, compStage2, compStage3, compStage4];
+    stages.forEach((st, idx) => {
+      if (st) {
+        st.classList.remove('completed', 'active');
+        if (idx === 0) st.classList.add('active');
+      }
+    });
+
+    if (compilingProgressBar) compilingProgressBar.style.width = '0%';
+    if (compilingPct) compilingPct.textContent = '0%';
+    if (compilingStepLabel) compilingStepLabel.textContent = 'Deconstructing Aptitude & Logic Vectors...';
+
+    compilingInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progressRatio = Math.min(elapsed / totalDurationMs, 1);
+      const currentPct = Math.floor(progressRatio * 100);
+
+      if (compilingProgressBar) compilingProgressBar.style.width = `${currentPct}%`;
+      if (compilingPct) compilingPct.textContent = `${currentPct}%`;
+
+      // Milestone 1 (0 to 4.2s)
+      if (elapsed >= 4200 && compStage1 && !compStage1.classList.contains('completed')) {
+        compStage1.classList.remove('active');
+        compStage1.classList.add('completed');
+        if (compStage2) compStage2.classList.add('active');
+        if (compilingStepLabel) compilingStepLabel.textContent = 'Cross-referencing 150+ Career Pathways...';
+      }
+
+      // Milestone 2 (4.2s to 8.8s)
+      if (elapsed >= 8800 && compStage2 && !compStage2.classList.contains('completed')) {
+        compStage2.classList.remove('active');
+        compStage2.classList.add('completed');
+        if (compStage3) compStage3.classList.add('active');
+        if (compilingStepLabel) compilingStepLabel.textContent = 'Calibrating Academic Stream Fit & Entrance Cutoffs...';
+      }
+
+      // Milestone 3 (8.8s to 13.2s)
+      if (elapsed >= 13200 && compStage3 && !compStage3.classList.contains('completed')) {
+        compStage3.classList.remove('active');
+        compStage3.classList.add('completed');
+        if (compStage4) compStage4.classList.add('active');
+        if (compilingStepLabel) compilingStepLabel.textContent = 'Compiling Coach Ravi Sankar\'s 5-Page Action Dossier...';
+      }
+
+      // Milestone 4 (13.2s to 16.8s)
+      if (elapsed >= 16800 && compStage4 && !compStage4.classList.contains('completed')) {
+        compStage4.classList.remove('active');
+        compStage4.classList.add('completed');
+        if (compilingStepLabel) compilingStepLabel.textContent = 'Dossier Compiled Successfully • Revealing Page 1...';
+      }
+
+      if (elapsed >= totalDurationMs) {
+        clearInterval(compilingInterval);
+        compilingInterval = null;
+        if (compilingProgressBar) compilingProgressBar.style.width = '100%';
+        if (compilingPct) compilingPct.textContent = '100%';
+        compilingTimeout = setTimeout(() => {
+          if (onComplete) onComplete();
+        }, 350);
+      }
+    }, 100);
+  }
+
   function finishAssessmentAndCompute() {
     if (flowAssessment) flowAssessment.classList.add('hidden');
-    if (flowCalculating) flowCalculating.classList.add('hidden');
+    if (flowResult) flowResult.classList.add('hidden');
 
-    // Instant computation - Zero fake delays
     // Determine dominant and secondary archetypes
     const sortedArchetypes = Object.keys(archetypeScores).sort((a, b) => archetypeScores[b] - archetypeScores[a]);
     const dominant = sortedArchetypes[0] || 'Investigator';
@@ -1302,10 +1395,14 @@ function initQuizModal() {
     // Dynamically calibrate SVG Radar Spider Chart
     updateRadarChart(archetypeScores);
 
-    // Reveal result immediately
-    if (flowResult) flowResult.classList.remove('hidden');
+    // Launch High-Trust 15-20s Dossier Compilation Sequence
+    if (flowCompiling) flowCompiling.classList.remove('hidden');
 
-    if (window.lucide) window.lucide.createIcons();
+    runCompilationSequence(() => {
+      if (flowCompiling) flowCompiling.classList.add('hidden');
+      if (flowResult) flowResult.classList.remove('hidden');
+      if (window.lucide) window.lucide.createIcons();
+    });
   }
 
   // Payment Form Submission & Unlock
