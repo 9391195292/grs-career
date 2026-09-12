@@ -803,37 +803,14 @@
             </div>
           </div>
 
-          <!-- Single Centered Unlock Card (Sitting on top of the blurred stack) -->
+          <!-- Single Centered Unlock Action (Sitting on top of the blurred stack) -->
           <div class="dossier-unlock-overlay" id="dossierUnlockOverlay">
-            <div class="unlock-glass-card">
-              <div class="unlock-crest-circle">
+            <div class="unlock-minimal-wrap">
+              <button type="button" class="btn-unlock-simple" id="openPaymentDrawerBtn">
                 <i data-lucide="lock"></i>
-              </div>
-              <span class="unlock-confidential-pill">CONFIDENTIAL 6-PAGE DOSSIER COMPILED</span>
-              <h3 class="unlock-card-title">Unlock Lifetime Career Clarity for Your Child</h3>
-              <p class="unlock-card-desc">
-                Your child's official 6-page action roadmap is compiled and ready. Unlock the exact 11th/12th subject combinations, top 15 target entrance exams, college cutoff roadmap, and Coach Ravi Sankar's personalized guidance.
-              </p>
-
-              <div class="unlock-pricing-banner">
-                <span class="u-cur">&#8377;</span>
-                <span class="u-amt">149</span>
-                <span class="u-was">&#8377;999</span>
-                <span class="u-discount">85% OFF</span>
-                <span class="u-clarity-note">&bull; One-Time Clarity Investment</span>
-              </div>
-
-              <!-- SINGLE ACTION BUTTON TO UNLOCK -->
-              <button type="button" class="btn-unlock-dossier" id="openPaymentDrawerBtn">
-                <span>Unlock Full 6-Page Dossier &bull; &#8377;149</span>
+                <span>Unlock</span>
                 <i data-lucide="arrow-right"></i>
               </button>
-
-              <div class="unlock-trust-badges">
-                <span><i data-lucide="check"></i> Instant PDF Download</span>
-                <span><i data-lucide="check"></i> Automated WhatsApp Delivery</span>
-                <span><i data-lucide="check"></i> IIT-M Certified Coach</span>
-              </div>
             </div>
           </div>
 
@@ -842,18 +819,27 @@
             <div class="checkout-drawer-content">
               <div class="checkout-drawer-header">
                 <div>
-                  <span class="checkout-tag">OFFICIAL PAYMENT GATEWAY</span>
-                  <h4 class="checkout-title">Unlock Your 6-Page Action Roadmap</h4>
+                  <span class="checkout-tag">CONFIDENTIAL EVALUATION READY</span>
+                  <h4 class="checkout-title">Unlock Full 6-Page Action Roadmap</h4>
                 </div>
-                <button type="button" class="checkout-close-btn" id="closePaymentDrawerBtn" aria-label="Back to Report">&times;</button>
+                <button type="button" class="checkout-close-btn" id="closePaymentDrawerBtn" aria-label="Close Checkout">&times;</button>
               </div>
 
               <div class="checkout-order-summary">
                 <div class="cos-item">
                   <span>6-Page Career Intelligence Dossier + WhatsApp Consultation</span>
-                  <strong>&#8377;149</strong>
+                  <div class="cos-price-block">
+                    <span class="cos-was">&#8377;999</span>
+                    <strong>&#8377;149</strong>
+                  </div>
                 </div>
-                <div class="cos-sub">Delivered instantly to screen &amp; registered WhatsApp</div>
+                <div class="cos-sub">One-Time Clarity Investment &bull; Instant PDF &amp; WhatsApp Dispatch</div>
+              </div>
+
+              <div class="checkout-features-list">
+                <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>11th &amp; 12th Subject Matrix (PCM / PCB / Commerce / Humanities fit)</span></div>
+                <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Top 15 Target Entrance Exams &amp; Cutoff Milestones (JEE, NEET, etc.)</span></div>
+                <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Guidance from Coach Ravi Sankar (IIT Madras Alum)</span></div>
               </div>
 
               <form id="unlockPayForm" novalidate>
@@ -880,7 +866,7 @@
               </form>
 
               <div class="drawer-trust-proofs">
-                <span>Bank-grade 256-bit SSL</span>
+                <span><i data-lucide="lock"></i> Bank-grade 256-bit SSL</span>
                 <span>UPI, Google Pay, PhonePe, Cards &amp; NetBanking</span>
               </div>
             </div>

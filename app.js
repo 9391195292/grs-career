@@ -1414,6 +1414,7 @@ function initQuizModal() {
     openPaymentDrawerBtn.addEventListener('click', () => {
       if (paymentCheckoutDrawer) {
         paymentCheckoutDrawer.classList.remove('hidden');
+        if (window.lucide) window.lucide.createIcons();
         if (buyerNameInput) buyerNameInput.focus();
       }
     });
@@ -1422,6 +1423,14 @@ function initQuizModal() {
   if (closePaymentDrawerBtn) {
     closePaymentDrawerBtn.addEventListener('click', () => {
       if (paymentCheckoutDrawer) {
+        paymentCheckoutDrawer.classList.add('hidden');
+      }
+    });
+  }
+
+  if (paymentCheckoutDrawer) {
+    paymentCheckoutDrawer.addEventListener('click', (e) => {
+      if (e.target === paymentCheckoutDrawer) {
         paymentCheckoutDrawer.classList.add('hidden');
       }
     });

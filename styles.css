@@ -2479,7 +2479,7 @@ body {
   border-radius: 2px;
 }
 
-/* Centered Floating Unlock Card */
+/* Centered Floating Minimalist Unlock Action */
 .dossier-unlock-overlay {
   position: absolute;
   inset: 26px 0 0 0;
@@ -2491,127 +2491,53 @@ body {
   pointer-events: auto;
 }
 
-.unlock-glass-card {
-  background: rgba(11, 17, 14, 0.95);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1.5px solid rgba(16, 185, 129, 0.45);
-  border-radius: 14px;
-  padding: 24px 20px;
-  text-align: center;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(16, 185, 129, 0.15);
-  max-width: 480px;
-  width: 100%;
-}
-
-.unlock-crest-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1.5px solid #10B981;
-  color: #10B981;
+.unlock-minimal-wrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-}
-.unlock-crest-circle svg {
-  width: 20px;
-  height: 20px;
+  gap: 8px;
 }
 
-.unlock-confidential-pill {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: #E5C378;
-  background: rgba(229, 195, 120, 0.12);
-  border: 1px solid rgba(229, 195, 120, 0.3);
-  padding: 3px 10px;
-  border-radius: 100px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-.unlock-card-title {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 900;
-  color: #FFFFFF;
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-
-.unlock-card-desc {
-  font-size: 11.5px;
-  color: #CBD5E1;
-  line-height: 1.45;
-  margin-bottom: 16px;
-}
-
-.unlock-pricing-banner {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4px 14px;
-  border-radius: 6px;
-  margin-bottom: 16px;
-}
-.u-cur { font-size: 13px; font-weight: 800; color: #10B981; }
-.u-amt { font-family: var(--font-display); font-size: 24px; font-weight: 900; color: #10B981; line-height: 1; }
-.u-was { font-size: 12px; color: #64748B; text-decoration: line-through; }
-.u-discount { font-family: var(--font-mono); font-size: 8px; font-weight: 800; background: rgba(239, 68, 68, 0.2); color: #F87171; padding: 1px 5px; border-radius: 20px; }
-.u-clarity-note { font-size: 9.5px; color: #94A3B8; margin-left: 4px; }
-
-.btn-unlock-dossier {
+.btn-unlock-simple {
   background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: #FFFFFF;
   font-family: var(--font-heading);
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 800;
-  padding: 13px 20px;
-  border-radius: 8px;
-  border: none;
+  letter-spacing: 0.5px;
+  padding: 14px 34px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 100%;
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
-  transition: all 0.2s ease;
-  margin-bottom: 12px;
-}
-.btn-unlock-dossier:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
-}
-.btn-unlock-dossier svg {
-  width: 16px;
-  height: 16px;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.45), 0 0 20px rgba(16, 185, 129, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  animation: pulseUnlock 2.4s infinite ease-in-out;
 }
 
-.unlock-trust-badges {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  font-size: 10px;
-  color: #94A3B8;
-  flex-wrap: wrap;
+@keyframes pulseUnlock {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.45), 0 0 15px rgba(16, 185, 129, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 14px 40px rgba(16, 185, 129, 0.65), 0 0 30px rgba(16, 185, 129, 0.55);
+    transform: scale(1.04);
+  }
 }
-.unlock-trust-badges span {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+
+.btn-unlock-simple:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 16px 45px rgba(16, 185, 129, 0.7), 0 0 35px rgba(16, 185, 129, 0.6);
 }
-.unlock-trust-badges svg {
-  width: 12px;
-  height: 12px;
-  color: #10B981;
+
+.btn-unlock-simple svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Payment Details Drawer / Modal */
@@ -2718,6 +2644,40 @@ body {
   font-size: 10px;
   color: #94A3B8;
   margin-top: 2px;
+}
+
+.cos-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.cos-was {
+  font-size: 11px;
+  color: #64748B;
+  text-decoration: line-through;
+}
+
+.checkout-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.cfl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #CBD5E1;
+}
+
+.cfl-item svg {
+  width: 14px;
+  height: 14px;
+  color: #10B981;
+  flex-shrink: 0;
 }
 
 .form-inputs-row {
