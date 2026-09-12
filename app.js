@@ -1078,7 +1078,10 @@ function initQuizModal() {
   const compatStream3Pct = document.getElementById('compatStream3Pct');
   const compatStream3Bar = document.getElementById('compatStream3Bar');
 
-  // Payment Form Elements
+  // Payment Form & Drawer Elements
+  const openPaymentDrawerBtn = document.getElementById('openPaymentDrawerBtn');
+  const closePaymentDrawerBtn = document.getElementById('closePaymentDrawerBtn');
+  const paymentCheckoutDrawer = document.getElementById('paymentCheckoutDrawer');
   const unlockPayForm = document.getElementById('unlockPayForm');
   const buyerNameInput = document.getElementById('buyerName');
   const buyerPhoneInput = document.getElementById('buyerPhone');
@@ -1155,6 +1158,7 @@ function initQuizModal() {
     if (flowCompiling) flowCompiling.classList.add('hidden');
     if (flowResult) flowResult.classList.add('hidden');
     if (flowPaidSuccess) flowPaidSuccess.classList.add('hidden');
+    if (paymentCheckoutDrawer) paymentCheckoutDrawer.classList.add('hidden');
 
     if (buyerNameInput) buyerNameInput.value = '';
     if (buyerPhoneInput) buyerPhoneInput.value = '';
@@ -1405,6 +1409,24 @@ function initQuizModal() {
     });
   }
 
+  // Two-Step Unlock Button & Payment Drawer Handlers
+  if (openPaymentDrawerBtn) {
+    openPaymentDrawerBtn.addEventListener('click', () => {
+      if (paymentCheckoutDrawer) {
+        paymentCheckoutDrawer.classList.remove('hidden');
+        if (buyerNameInput) buyerNameInput.focus();
+      }
+    });
+  }
+
+  if (closePaymentDrawerBtn) {
+    closePaymentDrawerBtn.addEventListener('click', () => {
+      if (paymentCheckoutDrawer) {
+        paymentCheckoutDrawer.classList.add('hidden');
+      }
+    });
+  }
+
   // Payment Form Submission & Unlock
   if (unlockPayForm) {
     unlockPayForm.addEventListener('submit', (e) => {
@@ -1450,13 +1472,13 @@ function initQuizModal() {
           amount: RAZORPAY_CONFIG.amount,
           currency: RAZORPAY_CONFIG.currency,
           name: RAZORPAY_CONFIG.name,
-          description: RAZORPAY_CONFIG.description,
+          description: '6-Dimensional Career Intelligence Roadmap',
           prefill: {
             name: name,
             contact: phone
           },
           theme: {
-            color: '#CCFF00'
+            color: '#10B981'
           },
           handler: function (response) {
             payUnlockBtn.disabled = false;
@@ -1508,6 +1530,7 @@ function initQuizModal() {
       scores: { ...archetypeScores }
     };
 
+    if (paymentCheckoutDrawer) paymentCheckoutDrawer.classList.add('hidden');
     if (flowResult) flowResult.classList.add('hidden');
     if (flowPaidSuccess) flowPaidSuccess.classList.remove('hidden');
     if (paidCandidateName) paidCandidateName.textContent = name;
@@ -1516,7 +1539,7 @@ function initQuizModal() {
     if (sendWhatsappReportBtn) {
       const waMsg = encodeURIComponent(
         `Hi Coach G. Ravi Sankar,\n` +
-        `I have completed my 5-D Career Diagnostic and unlocked my full roadmap!\n\n` +
+        `I have completed my 5-D Career Diagnostic and unlocked my official 6-page action roadmap!\n\n` +
         `Student Name: ${name}\n` +
         `Phone Number: ${phone}\n` +
         `Primary Recommendation: ${activeProfile.primaryRecommendation}\n` +
@@ -1527,7 +1550,7 @@ function initQuizModal() {
         `Recommended Stream: ${activeProfile.recommendedStream}\n` +
         `Target Entrances: ${activeProfile.targetEntrances}\n` +
         `Payment Transaction Ref: ${txnId}\n\n` +
-        `I have downloaded my 5-D Roadmap PDF and look forward to our clarity consultation.`
+        `I have downloaded my 6-Page Action Roadmap PDF and look forward to our clarity consultation.`
       );
       sendWhatsappReportBtn.href = `https://wa.me/${RAZORPAY_CONFIG.coachPhone}?text=${waMsg}`;
     }

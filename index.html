@@ -658,116 +658,132 @@
         </div>
       </div>
 
-      <!-- Step 2: Instant Computed Verdict & Authentic Graphical PDF Report Showcase (Unified Single Section) -->
+      <!-- Step 2: Computed Verdict in 6-Page Stacked Dossier (Blurred Front + Centered Unlock + Payment Modal) -->
       <div id="quizResultFlow" class="hidden">
-        <div class="pdf-document-sheet">
+        <div class="dossier-stack-container">
           
-          <!-- 1. Official Document Header Strip -->
-          <div class="doc-header">
-            <div class="doc-brand-group">
-              <div class="doc-crest">GRS</div>
-              <div class="doc-titles">
-                <span class="doc-title-main">GRS CAREER INTELLIGENCE &bull; OFFICIAL ACTION ROADMAP</span>
-                <span class="doc-title-sub">Coach G. Ravi Sankar &bull; IIT-Madras Certified Career Advisory</span>
-              </div>
-            </div>
-            <div class="doc-stamp-badge">PAGE 1 OF 5 &bull; VERIFIED</div>
+          <!-- Background Stack Layers (Pages 6, 5, 4, 3, 2 visibly peeking from behind) -->
+          <div class="stack-layer stack-layer-6" aria-hidden="true">
+            <div class="stack-tab"><span class="tab-badge">PAGE 6</span> Coach Mentorship Blueprint &amp; Parent Action Plan</div>
+          </div>
+          <div class="stack-layer stack-layer-5" aria-hidden="true">
+            <div class="stack-tab"><span class="tab-badge">PAGE 5</span> 5-Year Industry Demand &amp; Salary Trajectories</div>
+          </div>
+          <div class="stack-layer stack-layer-4" aria-hidden="true">
+            <div class="stack-tab"><span class="tab-badge">PAGE 4</span> Tier-1 College Cutoffs &amp; Percentile Targets</div>
+          </div>
+          <div class="stack-layer stack-layer-3" aria-hidden="true">
+            <div class="stack-tab"><span class="tab-badge">PAGE 3</span> Top 15 Gateway Entrance Exam Target Matrix</div>
+          </div>
+          <div class="stack-layer stack-layer-2" aria-hidden="true">
+            <div class="stack-tab"><span class="tab-badge">PAGE 2</span> 11th &amp; 12th Optimal Subject Combinations</div>
           </div>
 
-          <!-- 2. Instant Free Result Banner (Immediate Gratification) -->
-          <div class="doc-verdict-ribbon">
-            <div class="verdict-header-row">
-              <div>
-                <span class="verdict-kicker">PRIMARY ACADEMIC RECOMMENDATION</span>
-                <h3 class="verdict-stream-title" id="resPrimaryStream">Science Stream (PCM)</h3>
+          <!-- Front Layer: Page 1 of 6 (The Actual Computed Evaluation, 100% BLURRED) -->
+          <div class="stack-layer-front pdf-document-sheet is-blurred" id="dossierFrontSheet" aria-hidden="true">
+            <!-- 1. Official Document Header Strip -->
+            <div class="doc-header">
+              <div class="doc-brand-group">
+                <div class="doc-crest">GRS</div>
+                <div class="doc-titles">
+                  <span class="doc-title-main">GRS CAREER INTELLIGENCE &bull; OFFICIAL ACTION ROADMAP</span>
+                  <span class="doc-title-sub">Coach G. Ravi Sankar &bull; IIT-Madras Certified Career Advisory</span>
+                </div>
               </div>
-              <div class="verdict-match-pill" id="resPrimaryPct">95% Match (Optimal Fit)</div>
+              <div class="doc-stamp-badge">PAGE 1 OF 6 &bull; CONFIDENTIAL EVALUATION</div>
             </div>
 
-            <div class="verdict-career-line">
-              Strongest Career Match: <strong id="resStrongestCareer">Computer Science &amp; Deep-Tech Engineering</strong>
+            <!-- 2. Computed Verdict Banner -->
+            <div class="doc-verdict-ribbon">
+              <div class="verdict-header-row">
+                <div>
+                  <span class="verdict-kicker">PRIMARY ACADEMIC RECOMMENDATION</span>
+                  <h3 class="verdict-stream-title" id="resPrimaryStream">Science Stream (PCM)</h3>
+                </div>
+                <div class="verdict-match-pill" id="resPrimaryPct">95% Match (Optimal Fit)</div>
+              </div>
+
+              <div class="verdict-career-line">
+                Strongest Career Match: <strong id="resStrongestCareer">Computer Science &amp; Deep-Tech Engineering</strong>
+              </div>
+
+              <div class="verdict-alt-line">
+                Alternative High-Fit Directions: <span id="resAltCareers">Data Science, Robotics Engineering, Quantitative Finance</span>
+              </div>
             </div>
 
-            <div class="verdict-alt-line">
-              Alternative High-Fit Directions: <span id="resAltCareers">Data Science, Robotics Engineering, Quantitative Finance</span>
-            </div>
-          </div>
+            <!-- 3. Visual Charts Grid -->
+            <div class="doc-charts-grid">
+              <!-- Chart 1: SVG 5-D Spider Radar -->
+              <div class="chart-box">
+                <div class="chart-box-head">
+                  <span>5-D COGNITIVE PROFILE MAP</span>
+                </div>
+                <svg viewBox="-25 0 250 170" class="spider-svg" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="100,18 168,62 142,138 58,138 32,62" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
+                  <polygon points="100,41 146,70 128,121 72,121 54,70" fill="none" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2,2" />
+                  <polygon points="100,63 123,79 114,105 86,105 77,79" fill="none" stroke="#E2E8F0" stroke-width="0.8" />
+                  <line x1="100" y1="88" x2="100" y2="18" stroke="#CBD5E1" stroke-width="1" />
+                  <line x1="100" y1="88" x2="168" y2="62" stroke="#CBD5E1" stroke-width="1" />
+                  <line x1="100" y1="88" x2="142" y2="138" stroke="#CBD5E1" stroke-width="1" />
+                  <line x1="100" y1="88" x2="58" y2="138" stroke="#CBD5E1" stroke-width="1" />
+                  <line x1="100" y1="88" x2="32" y2="62" stroke="#CBD5E1" stroke-width="1" />
+                  <!-- Scored Dynamic Polygon -->
+                  <polygon id="radarScoredPolygon" points="100,24 158,64 134,130 66,128 40,66" fill="rgba(16, 185, 129, 0.25)" stroke="#10B981" stroke-width="2.5" />
+                  <circle cx="100" cy="24" r="3" fill="#10B981" />
+                  <circle cx="158" cy="64" r="3" fill="#10B981" />
+                  <circle cx="134" cy="130" r="3" fill="#10B981" />
+                  <circle cx="66" cy="128" r="3" fill="#10B981" />
+                  <circle cx="40" cy="66" r="3" fill="#10B981" />
+                  <text x="100" y="10" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Aptitude</text>
+                  <text x="172" y="64" text-anchor="start" font-size="8" font-weight="700" fill="#475569">Personality</text>
+                  <text x="144" y="148" text-anchor="start" font-size="8" font-weight="700" fill="#475569">Interests</text>
+                  <text x="56" y="148" text-anchor="end" font-size="8" font-weight="700" fill="#475569">Orientation</text>
+                  <text x="28" y="64" text-anchor="end" font-size="8" font-weight="700" fill="#475569">EQ Balance</text>
+                </svg>
+              </div>
 
-          <!-- 3. Visual Charts Grid (100% VISIBLE & GRAPHICAL) -->
-          <div class="doc-charts-grid">
-            <!-- Chart 1: SVG 5-D Spider Radar -->
-            <div class="chart-box">
-              <div class="chart-box-head">
-                <span>5-D COGNITIVE PROFILE MAP</span>
-              </div>
-              <svg viewBox="-25 0 250 170" class="spider-svg" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="100,18 168,62 142,138 58,138 32,62" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
-                <polygon points="100,41 146,70 128,121 72,121 54,70" fill="none" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="2,2" />
-                <polygon points="100,63 123,79 114,105 86,105 77,79" fill="none" stroke="#E2E8F0" stroke-width="0.8" />
-                <line x1="100" y1="88" x2="100" y2="18" stroke="#CBD5E1" stroke-width="1" />
-                <line x1="100" y1="88" x2="168" y2="62" stroke="#CBD5E1" stroke-width="1" />
-                <line x1="100" y1="88" x2="142" y2="138" stroke="#CBD5E1" stroke-width="1" />
-                <line x1="100" y1="88" x2="58" y2="138" stroke="#CBD5E1" stroke-width="1" />
-                <line x1="100" y1="88" x2="32" y2="62" stroke="#CBD5E1" stroke-width="1" />
-                <!-- Scored Dynamic Polygon -->
-                <polygon id="radarScoredPolygon" points="100,24 158,64 134,130 66,128 40,66" fill="rgba(16, 185, 129, 0.25)" stroke="#10B981" stroke-width="2.5" />
-                <circle cx="100" cy="24" r="3" fill="#10B981" />
-                <circle cx="158" cy="64" r="3" fill="#10B981" />
-                <circle cx="134" cy="130" r="3" fill="#10B981" />
-                <circle cx="66" cy="128" r="3" fill="#10B981" />
-                <circle cx="40" cy="66" r="3" fill="#10B981" />
-                <text x="100" y="10" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Aptitude</text>
-                <text x="172" y="64" text-anchor="start" font-size="8" font-weight="700" fill="#475569">Personality</text>
-                <text x="144" y="148" text-anchor="start" font-size="8" font-weight="700" fill="#475569">Interests</text>
-                <text x="56" y="148" text-anchor="end" font-size="8" font-weight="700" fill="#475569">Orientation</text>
-                <text x="28" y="64" text-anchor="end" font-size="8" font-weight="700" fill="#475569">EQ Balance</text>
-              </svg>
-            </div>
-
-            <!-- Chart 2: Stream Compatibility Meters -->
-            <div class="chart-box">
-              <div class="chart-box-head">
-                <span>STREAM COMPATIBILITY MATCH</span>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label-row">
-                  <span class="meter-title" id="compatStream1Name">Science (PCM)</span>
-                  <span class="meter-val" id="compatStream1Pct">94% Match</span>
+              <!-- Chart 2: Stream Compatibility Meters -->
+              <div class="chart-box">
+                <div class="chart-box-head">
+                  <span>STREAM COMPATIBILITY MATCH</span>
                 </div>
-                <div class="meter-bar-track">
-                  <div class="meter-bar-fill bar-pcm" id="compatStream1Bar" style="width: 94%;"></div>
+                <div class="meter-row">
+                  <div class="meter-label-row">
+                    <span class="meter-title" id="compatStream1Name">Science (PCM)</span>
+                    <span class="meter-val" id="compatStream1Pct">94% Match</span>
+                  </div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill bar-pcm" id="compatStream1Bar" style="width: 94%;"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label-row">
-                  <span class="meter-title" id="compatStream2Name">Commerce (with Maths)</span>
-                  <span class="meter-val" id="compatStream2Pct">78% Match</span>
+                <div class="meter-row">
+                  <div class="meter-label-row">
+                    <span class="meter-title" id="compatStream2Name">Commerce (with Maths)</span>
+                    <span class="meter-val" id="compatStream2Pct">78% Match</span>
+                  </div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill bar-comm" id="compatStream2Bar" style="width: 78%;"></div>
+                  </div>
                 </div>
-                <div class="meter-bar-track">
-                  <div class="meter-bar-fill bar-comm" id="compatStream2Bar" style="width: 78%;"></div>
+                <div class="meter-row">
+                  <div class="meter-label-row">
+                    <span class="meter-title" id="compatStream3Name">Humanities &amp; Arts</span>
+                    <span class="meter-val" id="compatStream3Pct" style="color: #64748B;">42% Match</span>
+                  </div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill bar-arts" id="compatStream3Bar" style="width: 42%;"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label-row">
-                  <span class="meter-title" id="compatStream3Name">Humanities &amp; Arts</span>
-                  <span class="meter-val" id="compatStream3Pct" style="color: #64748B;">42% Match</span>
+                <div class="official-stamp">
+                  <span class="stamp-text-1">OFFICIAL VERIFIED EVALUATION</span>
+                  <span class="stamp-text-2">IIT-MADRAS CERTIFIED COACH</span>
                 </div>
-                <div class="meter-bar-track">
-                  <div class="meter-bar-fill bar-arts" id="compatStream3Bar" style="width: 42%;"></div>
-                </div>
-              </div>
-              <div class="official-stamp">
-                <span class="stamp-text-1">OFFICIAL VERIFIED EVALUATION</span>
-                <span class="stamp-text-2">IIT-MADRAS CERTIFIED COACH</span>
               </div>
             </div>
-          </div>
 
-          <!-- 4. Blurred Detailed Roadmap with Floating Unlock Card -->
-          <div class="doc-locked-stage">
-            
-            <!-- Blurred Background Content (Subject Table & College Cutoffs) -->
-            <div class="doc-blurred-content" aria-hidden="true">
+            <!-- Page 1 Lower Teaser Section -->
+            <div class="doc-lower-preview">
               <div class="dummy-sec-title">Section 2: 11th &amp; 12th Subject Matrix &bull; Top 15 Gateway Entrance Targets</div>
               <div class="dummy-exam-tags">
                 <span class="d-tag">JEE Advanced</span>
@@ -785,27 +801,59 @@
                 <div class="d-bar" style="width: 48%;"></div>
               </div>
             </div>
+          </div>
 
-            <!-- Foregound Dark Unlock Card -->
-            <div class="doc-unlock-box">
-              <div class="unlock-badge-strip">
-                <span class="lock-mini-icon">
-                  <i data-lucide="lock"></i>
-                </span>
-                <span class="unlock-tag-label">CONFIDENTIAL 5-PAGE DOSSIER COMPILED</span>
+          <!-- Single Centered Unlock Card (Sitting on top of the blurred stack) -->
+          <div class="dossier-unlock-overlay" id="dossierUnlockOverlay">
+            <div class="unlock-glass-card">
+              <div class="unlock-crest-circle">
+                <i data-lucide="lock"></i>
               </div>
-
-              <h4 class="unlock-main-h">Unlock Lifetime Career Clarity for Your Child</h4>
-              <p class="unlock-explainer">
-                Unlock the 5-page breakdown: Subject combination choices for 11th/12th, Top 15 target entrance exams (JEE, BITSAT, etc.), and college cutoff roadmap.
+              <span class="unlock-confidential-pill">CONFIDENTIAL 6-PAGE DOSSIER COMPILED</span>
+              <h3 class="unlock-card-title">Unlock Lifetime Career Clarity for Your Child</h3>
+              <p class="unlock-card-desc">
+                Your child's official 6-page action roadmap is compiled and ready. Unlock the exact 11th/12th subject combinations, top 15 target entrance exams, college cutoff roadmap, and Coach Ravi Sankar's personalized guidance.
               </p>
 
-              <div class="pricing-pill">
-                <span class="p-cur">&#8377;</span>
-                <span class="p-val">149</span>
-                <span class="p-was">&#8377;999</span>
-                <span class="p-save">85% OFF</span>
-                <span class="p-note">&bull; One-Time Clarity Investment</span>
+              <div class="unlock-pricing-banner">
+                <span class="u-cur">&#8377;</span>
+                <span class="u-amt">149</span>
+                <span class="u-was">&#8377;999</span>
+                <span class="u-discount">85% OFF</span>
+                <span class="u-clarity-note">&bull; One-Time Clarity Investment</span>
+              </div>
+
+              <!-- SINGLE ACTION BUTTON TO UNLOCK -->
+              <button type="button" class="btn-unlock-dossier" id="openPaymentDrawerBtn">
+                <span>Unlock Full 6-Page Dossier &bull; &#8377;149</span>
+                <i data-lucide="arrow-right"></i>
+              </button>
+
+              <div class="unlock-trust-badges">
+                <span><i data-lucide="check"></i> Instant PDF Download</span>
+                <span><i data-lucide="check"></i> Automated WhatsApp Delivery</span>
+                <span><i data-lucide="check"></i> IIT-M Certified Coach</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Details Drawer / Sheet (Opens when user clicks "Unlock") -->
+          <div class="payment-checkout-drawer hidden" id="paymentCheckoutDrawer">
+            <div class="checkout-drawer-content">
+              <div class="checkout-drawer-header">
+                <div>
+                  <span class="checkout-tag">OFFICIAL PAYMENT GATEWAY</span>
+                  <h4 class="checkout-title">Unlock Your 6-Page Action Roadmap</h4>
+                </div>
+                <button type="button" class="checkout-close-btn" id="closePaymentDrawerBtn" aria-label="Back to Report">&times;</button>
+              </div>
+
+              <div class="checkout-order-summary">
+                <div class="cos-item">
+                  <span>6-Page Career Intelligence Dossier + WhatsApp Consultation</span>
+                  <strong>&#8377;149</strong>
+                </div>
+                <div class="cos-sub">Delivered instantly to screen &amp; registered WhatsApp</div>
               </div>
 
               <form id="unlockPayForm" novalidate>
@@ -821,22 +869,21 @@
                     <span class="field-error" id="buyerPhoneError"></span>
                   </div>
                 </div>
+
                 <div id="unlockGlobalError" class="form-global-error hidden"></div>
 
                 <button type="submit" class="btn-pay-now" id="payUnlockBtn">
                   <i data-lucide="shield-check"></i>
-                  <span>Pay &#8377;149 &amp; Unlock Full 5-Page Roadmap</span>
+                  <span>Pay &#8377;149 &amp; Unlock Full 6-Page Roadmap</span>
                   <i data-lucide="arrow-right"></i>
                 </button>
               </form>
 
-              <div class="trust-proofs">
-                <span><i data-lucide="check"></i> Instant PDF Download</span>
-                <span><i data-lucide="check"></i> Automated WhatsApp Delivery</span>
-                <span><i data-lucide="check"></i> IIT-M Certified Coach</span>
+              <div class="drawer-trust-proofs">
+                <span>Bank-grade 256-bit SSL</span>
+                <span>UPI, Google Pay, PhonePe, Cards &amp; NetBanking</span>
               </div>
             </div>
-
           </div>
 
         </div>

@@ -2320,26 +2320,123 @@ body {
   font-weight: 700;
 }
 
-/* 4. Blurred Detailed Roadmap with Floating Unlock Card */
-.doc-locked-stage {
+/* ==========================================================================
+   6-PAGE PHYSICAL DOSSIER STACK & BLURRED PREVIEW
+   ========================================================================== */
+.dossier-stack-container {
   position: relative;
-  background: #F8FAFC;
-  padding: 10px 14px;
-  min-height: 230px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  width: 100%;
+  max-width: 590px;
+  margin: 0 auto;
+  padding-top: 26px;
 }
 
-/* Blurred Background Content (Subject Table & College Cutoffs) */
-.doc-blurred-content {
+/* Background stacked pages (Pages 6, 5, 4, 3, 2) */
+.stack-layer {
   position: absolute;
-  inset: 10px 14px;
-  filter: blur(3px);
-  opacity: 0.35;
+  border-radius: 12px 12px 0 0;
+  border-bottom: none;
+  overflow: hidden;
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.stack-layer-6 {
+  top: 0px;
+  left: 28px;
+  right: 28px;
+  height: 38px;
+  background: #0B101B;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1;
+}
+
+.stack-layer-5 {
+  top: 5px;
+  left: 22px;
+  right: 22px;
+  height: 38px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+}
+
+.stack-layer-4 {
+  top: 10px;
+  left: 16px;
+  right: 16px;
+  height: 38px;
+  background: #1E293B;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 3;
+}
+
+.stack-layer-3 {
+  top: 15px;
+  left: 10px;
+  right: 10px;
+  height: 38px;
+  background: #CBD5E1;
+  border: 1px solid #94A3B8;
+  z-index: 4;
+}
+
+.stack-layer-2 {
+  top: 20px;
+  left: 4px;
+  right: 4px;
+  height: 38px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  z-index: 5;
+}
+
+.stack-tab {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+}
+.stack-layer-6 .stack-tab,
+.stack-layer-5 .stack-tab,
+.stack-layer-4 .stack-tab {
+  color: #94A3B8;
+}
+.stack-layer-3 .stack-tab,
+.stack-layer-2 .stack-tab {
+  color: #475569;
+}
+
+.tab-badge {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Front Page (Page 1 of 6) */
+.stack-layer-front {
+  position: relative;
+  z-index: 6;
+}
+
+.stack-layer-front.is-blurred {
+  filter: blur(8px);
+  opacity: 0.85;
   user-select: none;
   pointer-events: none;
+  transition: filter 0.3s ease;
+}
+
+.doc-lower-preview {
+  padding: 10px 14px 14px 14px;
+  background: #F8FAFC;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -2382,81 +2479,246 @@ body {
   border-radius: 2px;
 }
 
-/* Foreground Dark Unlock Card */
-.doc-unlock-box {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  background: #0B110E;
-  border: 1.5px solid #10B981;
-  border-radius: 9px;
-  padding: 14px 16px;
-  text-align: center;
-  color: #FFFFFF;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
-}
-
-.unlock-badge-strip {
+/* Centered Floating Unlock Card */
+.dossier-unlock-overlay {
+  position: absolute;
+  inset: 26px 0 0 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  margin-bottom: 4px;
+  padding: 16px;
+  pointer-events: auto;
 }
 
-.lock-mini-icon {
+.unlock-glass-card {
+  background: rgba(11, 17, 14, 0.95);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(16, 185, 129, 0.15);
+  max-width: 480px;
+  width: 100%;
+}
+
+.unlock-crest-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1.5px solid #10B981;
   color: #10B981;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.unlock-crest-circle svg {
+  width: 20px;
+  height: 20px;
 }
 
-.lock-mini-icon svg {
-  width: 13px;
-  height: 13px;
-}
-
-.unlock-tag-label {
+.unlock-confidential-pill {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
   color: #E5C378;
-  text-transform: uppercase;
+  background: rgba(229, 195, 120, 0.12);
+  border: 1px solid rgba(229, 195, 120, 0.3);
+  padding: 3px 10px;
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
-.unlock-main-h {
+.unlock-card-title {
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 900;
   color: #FFFFFF;
-  margin-bottom: 3px;
-  line-height: 1.25;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
-.unlock-explainer {
-  font-size: 11px;
+.unlock-card-desc {
+  font-size: 11.5px;
   color: #CBD5E1;
-  line-height: 1.4;
-  max-width: 440px;
-  margin: 0 auto 8px auto;
+  line-height: 1.45;
+  margin-bottom: 16px;
 }
 
-.pricing-pill {
+.unlock-pricing-banner {
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3px 12px;
-  border-radius: 5px;
-  margin-bottom: 8px;
+  padding: 4px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+.u-cur { font-size: 13px; font-weight: 800; color: #10B981; }
+.u-amt { font-family: var(--font-display); font-size: 24px; font-weight: 900; color: #10B981; line-height: 1; }
+.u-was { font-size: 12px; color: #64748B; text-decoration: line-through; }
+.u-discount { font-family: var(--font-mono); font-size: 8px; font-weight: 800; background: rgba(239, 68, 68, 0.2); color: #F87171; padding: 1px 5px; border-radius: 20px; }
+.u-clarity-note { font-size: 9.5px; color: #94A3B8; margin-left: 4px; }
+
+.btn-unlock-dossier {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 800;
+  padding: 13px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+}
+.btn-unlock-dossier:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}
+.btn-unlock-dossier svg {
+  width: 16px;
+  height: 16px;
 }
 
-.p-cur { font-size: 12px; font-weight: 800; color: #10B981; }
-.p-val { font-family: var(--font-display); font-size: 22px; font-weight: 900; color: #10B981; line-height: 1; }
-.p-was { font-size: 11.5px; color: #64748B; text-decoration: line-through; }
-.p-save { font-family: var(--font-mono); font-size: 8px; font-weight: 800; background: rgba(239, 68, 68, 0.2); color: #F87171; padding: 1px 5px; border-radius: 20px; }
-.p-note { font-size: 9.5px; color: #94A3B8; margin-left: 3px; }
+.unlock-trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 10px;
+  color: #94A3B8;
+  flex-wrap: wrap;
+}
+.unlock-trust-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.unlock-trust-badges svg {
+  width: 12px;
+  height: 12px;
+  color: #10B981;
+}
+
+/* Payment Details Drawer / Modal */
+.payment-checkout-drawer {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(6, 9, 8, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 12px;
+}
+.payment-checkout-drawer.hidden {
+  display: none !important;
+}
+
+.checkout-drawer-content {
+  background: #0B110E;
+  border: 1.5px solid #10B981;
+  border-radius: 12px;
+  padding: 20px 18px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  color: #FFFFFF;
+  text-align: center;
+  animation: drawerPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes drawerPop {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.checkout-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+}
+
+.checkout-tag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #10B981;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.checkout-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.checkout-close-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+.checkout-close-btn:hover {
+  color: #FFFFFF;
+}
+
+.checkout-order-summary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.cos-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+.cos-item strong {
+  font-size: 15px;
+  color: #10B981;
+  font-family: var(--font-heading);
+}
+.cos-sub {
+  font-size: 10px;
+  color: #94A3B8;
+  margin-top: 2px;
+}
 
 .form-inputs-row {
   display: grid;
@@ -2533,25 +2795,13 @@ body {
   height: 15px;
 }
 
-.trust-proofs {
+.drawer-trust-proofs {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 6px;
+  gap: 14px;
+  margin-top: 10px;
   font-size: 9.5px;
   color: #94A3B8;
-}
-
-.trust-proofs span {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.trust-proofs svg {
-  width: 11px;
-  height: 11px;
-  color: #10B981;
 }
 
 @media (max-width: 600px) {
