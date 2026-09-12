@@ -375,6 +375,10 @@
                 <li><i data-lucide="check-circle-2"></i> Eliminating Parent-Student Discord</li>
                 <li><i data-lucide="check-circle-2"></i> Mapping 10-Year Industry Growth Trends</li>
               </ul>
+              <button type="button" class="btn-stage-quiz" data-stage="9-10">
+                <i data-lucide="compass"></i>
+                <span>Start Class 9 &amp; 10 Stream Diagnostic</span>
+              </button>
             </div>
             <div class="pathway-interactive-box">
               <div class="stream-pill-grid">
@@ -400,6 +404,10 @@
                 <li><i data-lucide="check-circle-2"></i> Entrance Exam Stress Mitigation</li>
                 <li><i data-lucide="check-circle-2"></i> Scholarship &amp; Profile Building Roadmaps</li>
               </ul>
+              <button type="button" class="btn-stage-quiz" data-stage="11-12">
+                <i data-lucide="compass"></i>
+                <span>Start Class 11 &amp; 12 Strategy Diagnostic</span>
+              </button>
             </div>
             <div class="pathway-interactive-box">
               <div class="stat-highlight-box">
@@ -421,6 +429,10 @@
                 <li><i data-lucide="check-circle-2"></i> 1-on-1 Executive Mentorship</li>
                 <li><i data-lucide="check-circle-2"></i> High-Demand Industry Gap Analysis</li>
               </ul>
+              <button type="button" class="btn-stage-quiz" data-stage="pivot">
+                <i data-lucide="compass"></i>
+                <span>Start Career Pivot Diagnostic</span>
+              </button>
             </div>
             <div class="pathway-interactive-box">
               <div class="stream-pill-grid">
@@ -560,7 +572,7 @@
         <div class="modal-header">
           <div class="modal-header-top">
             <span class="modal-tag">5-DIMENSIONAL PROFILING TEST</span>
-            <span class="quiz-q-counter">Question <strong id="qCurrentNum">1</strong> of 10</span>
+            <span class="quiz-q-counter">Question <strong id="qCurrentNum">1</strong> of <span id="qTotalNum">11</span></span>
           </div>
           <div class="quiz-progress-bar-wrap">
             <div class="quiz-progress-bar-fill" id="quizProgressBar"></div>
@@ -670,13 +682,13 @@
             <div class="stack-tab"><span class="tab-badge">PAGE 5</span> 5-Year Industry Demand &amp; Salary Trajectories</div>
           </div>
           <div class="stack-layer stack-layer-4" aria-hidden="true">
-            <div class="stack-tab"><span class="tab-badge">PAGE 4</span> Tier-1 College Cutoffs &amp; Percentile Targets</div>
+            <div class="stack-tab" id="stackTab4"><span class="tab-badge">PAGE 4</span> Tier-1 College Cutoffs &amp; Percentile Targets</div>
           </div>
           <div class="stack-layer stack-layer-3" aria-hidden="true">
-            <div class="stack-tab"><span class="tab-badge">PAGE 3</span> Top 15 Gateway Entrance Exam Target Matrix</div>
+            <div class="stack-tab" id="stackTab3"><span class="tab-badge">PAGE 3</span> Top 15 Gateway Entrance Exam Target Matrix</div>
           </div>
           <div class="stack-layer stack-layer-2" aria-hidden="true">
-            <div class="stack-tab"><span class="tab-badge">PAGE 2</span> 11th &amp; 12th Optimal Subject Combinations</div>
+            <div class="stack-tab" id="stackTab2"><span class="tab-badge">PAGE 2</span> 11th &amp; 12th Optimal Subject Combinations</div>
           </div>
 
           <!-- Front Layer: Page 1 of 6 (The Actual Computed Evaluation, 100% BLURRED) -->
@@ -690,14 +702,14 @@
                   <span class="doc-title-sub">Coach G. Ravi Sankar &bull; IIT-Madras Certified Career Advisory</span>
                 </div>
               </div>
-              <div class="doc-stamp-badge">PAGE 1 OF 6 &bull; CONFIDENTIAL EVALUATION</div>
+              <div class="doc-stamp-badge" id="docStampBadge">PAGE 1 OF 6 &bull; CONFIDENTIAL EVALUATION</div>
             </div>
 
             <!-- 2. Computed Verdict Banner -->
             <div class="doc-verdict-ribbon">
               <div class="verdict-header-row">
                 <div>
-                  <span class="verdict-kicker">PRIMARY ACADEMIC RECOMMENDATION</span>
+                  <span class="verdict-kicker" id="docVerdictKicker">PRIMARY ACADEMIC RECOMMENDATION</span>
                   <h3 class="verdict-stream-title" id="resPrimaryStream">Science Stream (PCM)</h3>
                 </div>
                 <div class="verdict-match-pill" id="resPrimaryPct">95% Match (Optimal Fit)</div>
@@ -819,8 +831,8 @@
             <div class="checkout-drawer-content">
               <div class="checkout-drawer-header">
                 <div>
-                  <span class="checkout-tag">CONFIDENTIAL EVALUATION READY</span>
-                  <h4 class="checkout-title">Unlock Full 6-Page Action Roadmap</h4>
+                  <span class="checkout-tag" id="checkoutTag">CONFIDENTIAL EVALUATION READY</span>
+                  <h4 class="checkout-title" id="checkoutTitle">Unlock Full 6-Page Action Roadmap</h4>
                 </div>
                 <button type="button" class="checkout-close-btn" id="closePaymentDrawerBtn" aria-label="Close Checkout">&times;</button>
               </div>
@@ -836,7 +848,7 @@
                 <div class="cos-sub">One-Time Clarity Investment &bull; Instant PDF &amp; WhatsApp Dispatch</div>
               </div>
 
-              <div class="checkout-features-list">
+              <div class="checkout-features-list" id="checkoutFeaturesList">
                 <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>11th &amp; 12th Subject Matrix (PCM / PCB / Commerce / Humanities fit)</span></div>
                 <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Top 15 Target Entrance Exams &amp; Cutoff Milestones (JEE, NEET, etc.)</span></div>
                 <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Guidance from Coach Ravi Sankar (IIT Madras Alum)</span></div>

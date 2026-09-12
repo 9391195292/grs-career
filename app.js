@@ -486,8 +486,21 @@ const RAZORPAY_CONFIG = {
   coachPhone: '919490075459'
 };
 
-// 10 Scenario-based Questions (2 per Dimension) tagged to 5 Archetypes
+// 11 Scenario-based Questions (Academic Stage + 10 questions for 5 Dimensions)
 const QUIZ_QUESTIONS = [
+  // ACADEMIC STAGE / MILESTONE (Website Alignment: 9th-10th, 11th-12th, College, Early Pivot)
+  {
+    dimension: 'Current Academic Stage',
+    isStageQuestion: true,
+    question: 'Which academic stage or career milestone best describes your current journey?',
+    options: [
+      { key: 'A', text: 'Class 9 or 10 — Stream Selection (Evaluating Science PCM/PCB, Commerce, Arts)', stage: 'Class 9 & 10', stageKey: '9-10' },
+      { key: 'B', text: 'Class 11 or 12 — College Strategy (Targeting Entrance Exams like JEE, NEET, CUET, BITSAT)', stage: 'Class 11 & 12', stageKey: '11-12' },
+      { key: 'C', text: 'College / Undergrad — Degree Launch (Choosing Specializations, Internships & Placements)', stage: 'College Student', stageKey: 'college' },
+      { key: 'D', text: 'Early Career Pivot — Professional Transition (Switching into Tech, Finance, Product or Design)', stage: 'Early Career Pivot', stageKey: 'pivot' }
+    ]
+  },
+
   // DIMENSION 1: APTITUDE & LOGIC
   {
     dimension: 'Aptitude & Logic',
@@ -1098,6 +1111,8 @@ function initQuizModal() {
   // State
   let currentQuestionIdx = 0;
   let archetypeScores = { Builder: 0, Investigator: 0, Creator: 0, Strategist: 0, Supporter: 0 };
+  let selectedAcademicStage = 'Class 9 & 10';
+  let selectedStageKey = '9-10';
   let activeProfile = null;
   let verifiedPaymentData = null;
   let compilingInterval = null;
@@ -1131,6 +1146,14 @@ function initQuizModal() {
     }
   });
 
+  // Wire Direct Pathway Tab Buttons
+  document.querySelectorAll('.btn-stage-quiz').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const stage = btn.getAttribute('data-stage') || '9-10';
+      resetAndOpenQuiz(stage);
+    });
+  });
+
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       cancelCompilation();
@@ -1148,11 +1171,18 @@ function initQuizModal() {
     });
   }
 
-  function resetAndOpenQuiz() {
+  function resetAndOpenQuiz(initialStageKey) {
     cancelCompilation();
     currentQuestionIdx = 0;
     archetypeScores = { Builder: 0, Investigator: 0, Creator: 0, Strategist: 0, Supporter: 0 };
     activeProfile = null;
+    selectedStageKey = initialStageKey || '9-10';
+
+    if (initialStageKey === '9-10') selectedAcademicStage = 'Class 9 & 10';
+    else if (initialStageKey === '11-12') selectedAcademicStage = 'Class 11 & 12';
+    else if (initialStageKey === 'college') selectedAcademicStage = 'College Student';
+    else if (initialStageKey === 'pivot') selectedAcademicStage = 'Early Career Pivot';
+    else selectedAcademicStage = 'Class 9 & 10';
 
     if (flowAssessment) flowAssessment.classList.remove('hidden');
     if (flowCompiling) flowCompiling.classList.add('hidden');
@@ -1195,6 +1225,8 @@ function initQuizModal() {
     if (!qData) return;
 
     if (qCurrentNum) qCurrentNum.textContent = idx + 1;
+    const qTotalNum = document.getElementById('qTotalNum');
+    if (qTotalNum) qTotalNum.textContent = QUIZ_QUESTIONS.length;
     if (quizProgressBar) {
       quizProgressBar.style.width = `${((idx + 1) / QUIZ_QUESTIONS.length) * 100}%`;
     }
@@ -1218,8 +1250,16 @@ function initQuizModal() {
           const allButtons = qOptionsContainer.querySelectorAll('.q-choice-btn');
           allButtons.forEach(b => b.style.pointerEvents = 'none');
 
-          // Record score
-          archetypeScores[opt.archetype] = (archetypeScores[opt.archetype] || 0) + 1;
+          // Record academic stage if present
+          if (opt.stage) {
+            selectedAcademicStage = opt.stage;
+            selectedStageKey = opt.stageKey || '9-10';
+          }
+
+          // Record archetype score if present
+          if (opt.archetype) {
+            archetypeScores[opt.archetype] = (archetypeScores[opt.archetype] || 0) + 1;
+          }
 
           setTimeout(() => {
             if (idx + 1 < QUIZ_QUESTIONS.length) {
@@ -1396,6 +1436,74 @@ function initQuizModal() {
       if (compatStream3Bar) compatStream3Bar.style.width = dynamicCompat[2].pct + '%';
     }
 
+    // Contextualize results based on selectedAcademicStage (Class 9-10, 11-12, College, Early Pivot)
+    const docStampBadge = document.getElementById('docStampBadge');
+    const docVerdictKicker = document.getElementById('docVerdictKicker');
+    const stackTab2 = document.getElementById('stackTab2');
+    const stackTab3 = document.getElementById('stackTab3');
+    const stackTab4 = document.getElementById('stackTab4');
+    const checkoutTag = document.getElementById('checkoutTag');
+    const checkoutTitle = document.getElementById('checkoutTitle');
+    const checkoutFeaturesList = document.getElementById('checkoutFeaturesList');
+
+    if (selectedStageKey === '9-10') {
+      if (docStampBadge) docStampBadge.textContent = 'PAGE 1 OF 6 • CLASS 9 & 10 STREAM EVALUATION';
+      if (docVerdictKicker) docVerdictKicker.textContent = 'PRIMARY ACADEMIC STREAM RECOMMENDATION';
+      if (stackTab2) stackTab2.innerHTML = '<span class="tab-badge">PAGE 2</span> 11th &amp; 12th Optimal Subject Combinations';
+      if (stackTab3) stackTab3.innerHTML = '<span class="tab-badge">PAGE 3</span> Top 15 Gateway Entrance Exam Target Matrix';
+      if (checkoutTag) checkoutTag.textContent = 'CLASS 9 & 10 STREAM DOSSIER READY';
+      if (checkoutTitle) checkoutTitle.textContent = 'Unlock 11th/12th Stream Selection Roadmap';
+      if (checkoutFeaturesList) {
+        checkoutFeaturesList.innerHTML = `
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>11th &amp; 12th Stream &amp; Subject Matrix (PCM / PCB / Commerce / Humanities fit)</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Top 15 Gateway Entrance Exams &amp; Early Foundation Milestones</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Stream Advisory from Coach Ravi Sankar (IIT Madras Alum)</span></div>
+        `;
+      }
+    } else if (selectedStageKey === '11-12') {
+      if (docStampBadge) docStampBadge.textContent = 'PAGE 1 OF 6 • CLASS 11 & 12 COLLEGE BLUEPRINT';
+      if (docVerdictKicker) docVerdictKicker.textContent = 'PRIMARY DEGREE & ENTRANCE DIRECTION';
+      if (stackTab2) stackTab2.innerHTML = '<span class="tab-badge">PAGE 2</span> Top 15 Target Entrance Exams &amp; Cutoff Milestones (JEE/NEET/CUET/BITSAT)';
+      if (stackTab3) stackTab3.innerHTML = '<span class="tab-badge">PAGE 3</span> 3-Tier College Selection Strategy (Dream, Target, Safe)';
+      if (checkoutTag) checkoutTag.textContent = 'CLASS 11 & 12 COLLEGE STRATEGY READY';
+      if (checkoutTitle) checkoutTitle.textContent = 'Unlock College Admissions & Entrance Roadmap';
+      if (checkoutFeaturesList) {
+        checkoutFeaturesList.innerHTML = `
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>3-Tier College Selection Blueprint (Dream, Target, Safe Institutions)</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Top 15 Target Entrance Exams &amp; Cutoff Percentiles (JEE, NEET, BITSAT, CUET)</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Exam Strategy Guidance from Coach Ravi Sankar</span></div>
+        `;
+      }
+    } else if (selectedStageKey === 'college') {
+      if (docStampBadge) docStampBadge.textContent = 'PAGE 1 OF 6 • UNDERGRAD CAREER LAUNCHPAD';
+      if (docVerdictKicker) docVerdictKicker.textContent = 'PRIMARY CAREER SPECIALIZATION DIRECTION';
+      if (stackTab2) stackTab2.innerHTML = '<span class="tab-badge">PAGE 2</span> Degree Specialization &amp; High-Yield Domain Matrix';
+      if (stackTab3) stackTab3.innerHTML = '<span class="tab-badge">PAGE 3</span> Tier-1 Internship &amp; Campus Placement Strategy';
+      if (checkoutTag) checkoutTag.textContent = 'COLLEGE CAREER LAUNCHPAD READY';
+      if (checkoutTitle) checkoutTitle.textContent = 'Unlock Degree Specialization & Placement Roadmap';
+      if (checkoutFeaturesList) {
+        checkoutFeaturesList.innerHTML = `
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Degree Specialization &amp; High-Yield Industry Domain Matrix</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Tier-1 Internship &amp; Campus Placement Positioning Blueprint</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Career Mentorship from Coach Ravi Sankar</span></div>
+        `;
+      }
+    } else if (selectedStageKey === 'pivot') {
+      if (docStampBadge) docStampBadge.textContent = 'PAGE 1 OF 6 • EARLY CAREER PIVOT BLUEPRINT';
+      if (docVerdictKicker) docVerdictKicker.textContent = 'PRIMARY HIGH-GROWTH PIVOT DIRECTION';
+      if (stackTab2) stackTab2.innerHTML = '<span class="tab-badge">PAGE 2</span> Industry Domain Transition &amp; Upskilling Matrix';
+      if (stackTab3) stackTab3.innerHTML = '<span class="tab-badge">PAGE 3</span> High-Demand Skill Gap Analysis &amp; Portfolio Roadmap';
+      if (checkoutTag) checkoutTag.textContent = 'CAREER PIVOT BLUEPRINT READY';
+      if (checkoutTitle) checkoutTitle.textContent = 'Unlock Strategic Career Pivot Roadmap';
+      if (checkoutFeaturesList) {
+        checkoutFeaturesList.innerHTML = `
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Strategic Industry Pivot Matrix (Tech, Quant Finance, Product, Design)</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>High-Demand Skill Gap Analysis &amp; Resume/Portfolio Positioning</span></div>
+          <div class="cfl-item"><i data-lucide="check-circle-2"></i> <span>Direct 1-on-1 Executive Pivot Advisory with Coach Ravi Sankar</span></div>
+        `;
+      }
+    }
+
     // Dynamically calibrate SVG Radar Spider Chart
     updateRadarChart(archetypeScores);
 
@@ -1533,6 +1641,7 @@ function initQuizModal() {
     verifiedPaymentData = {
       name: name,
       phone: phone,
+      stage: selectedAcademicStage,
       txnId: txnId,
       date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
       profile: activeProfile,
@@ -1549,7 +1658,8 @@ function initQuizModal() {
       const waMsg = encodeURIComponent(
         `Hi Coach G. Ravi Sankar,\n` +
         `I have completed my 5-D Career Diagnostic and unlocked my official 6-page action roadmap!\n\n` +
-        `Student Name: ${name}\n` +
+        `Candidate Name: ${name}\n` +
+        `Academic Stage: ${selectedAcademicStage}\n` +
         `Phone Number: ${phone}\n` +
         `Primary Recommendation: ${activeProfile.primaryRecommendation}\n` +
         `Strongest Career Match: ${activeProfile.strongestCareerMatch}\n` +
@@ -1645,6 +1755,10 @@ function initQuizModal() {
             <div>
               <span style="font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: bold;">Candidate Name</span>
               <div style="font-size: 18px; font-weight: 800; color: #0f172a;">${name}</div>
+            </div>
+            <div style="text-align: center;">
+              <span style="font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: bold;">Academic Stage</span>
+              <div style="font-size: 14px; font-weight: 700; color: #15803d;">${data.stage || 'Class 9 & 10'}</div>
             </div>
             <div style="text-align: right;">
               <span style="font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: bold;">Phone / WhatsApp</span>
