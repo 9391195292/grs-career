@@ -233,7 +233,37 @@ function initThreeJSScene() {
    ========================================================================== */
 function initMatterPhysics() {
   const container = document.getElementById('physicsCanvas');
-  if (!container || !window.Matter) return;
+  if (!container) return;
+
+  // Career Badges Data
+  const careerTags = [
+    { text: 'AI & ROBOTICS', color: '#CCFF00', textCol: '#000000', w: 145, h: 42 },
+    { text: 'QUANT FINANCE', color: '#BAE6FD', textCol: '#000000', w: 140, h: 42 },
+    { text: 'PRODUCT DESIGN', color: '#FEF08A', textCol: '#000000', w: 145, h: 42 },
+    { text: 'BIOTECH & GENETICS', color: '#A7F3D0', textCol: '#000000', w: 165, h: 42 },
+    { text: 'CORPORATE LAW', color: '#FED7AA', textCol: '#000000', w: 145, h: 42 },
+    { text: 'COGNITIVE PSYCH', color: '#E9D5FF', textCol: '#000000', w: 155, h: 42 },
+    { text: 'CYBERSECURITY', color: '#CCFF00', textCol: '#000000', w: 140, h: 42 },
+    { text: 'DATA SCIENCE', color: '#FBCFE8', textCol: '#000000', w: 135, h: 42 },
+    { text: 'VENTURE CAPITAL', color: '#FEF08A', textCol: '#000000', w: 150, h: 42 },
+    { text: 'NEUROSCIENCE', color: '#BAE6FD', textCol: '#000000', w: 140, h: 42 }
+  ];
+
+  if (!window.Matter) {
+    // Fallback: render tags as interactive pill flex items inside container
+    const fallbackWrap = document.createElement('div');
+    fallbackWrap.className = 'physics-fallback-wrap';
+    careerTags.forEach(tag => {
+      const pill = document.createElement('div');
+      pill.className = 'physics-fallback-pill';
+      pill.style.backgroundColor = tag.color;
+      pill.style.color = tag.textCol;
+      pill.textContent = tag.text;
+      fallbackWrap.appendChild(pill);
+    });
+    container.appendChild(fallbackWrap);
+    return;
+  }
 
   const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint, Events } = Matter;
 
@@ -242,8 +272,10 @@ function initMatterPhysics() {
     gravity: { x: 0, y: 0.9 }
   });
 
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const width = container.clientWidth || 800;
+  const height = container.clientHeight || 250;
+  const isMobile = window.innerWidth <= 768;
+  const scale = isMobile ? 0.72 : 1.0;
 
   // Create renderer
   const render = Render.create({
@@ -278,38 +310,26 @@ function initMatterPhysics() {
 
   Composite.add(engine.world, [floor, leftWall, rightWall]);
 
-  // Career Badges Data
-  const careerTags = [
-    { text: 'AI & ROBOTICS', color: '#CCFF00', textCol: '#000000', w: 160, h: 48 },
-    { text: 'QUANT FINANCE', color: '#BAE6FD', textCol: '#000000', w: 155, h: 48 },
-    { text: 'PRODUCT DESIGN', color: '#FEF08A', textCol: '#000000', w: 165, h: 48 },
-    { text: 'BIOTECH & GENETICS', color: '#A7F3D0', textCol: '#000000', w: 190, h: 48 },
-    { text: 'CORPORATE LAW', color: '#FED7AA', textCol: '#000000', w: 160, h: 48 },
-    { text: 'COGNITIVE PSYCH', color: '#E9D5FF', textCol: '#000000', w: 175, h: 48 },
-    { text: 'CYBERSECURITY', color: '#CCFF00', textCol: '#000000', w: 155, h: 48 },
-    { text: 'DATA SCIENCE', color: '#FBCFE8', textCol: '#000000', w: 150, h: 48 },
-    { text: 'VENTURE CAPITAL', color: '#FEF08A', textCol: '#000000', w: 165, h: 48 },
-    { text: 'NEUROSCIENCE', color: '#BAE6FD', textCol: '#000000', w: 155, h: 48 }
-  ];
-
   // Spawn career bodies
   const bodies = careerTags.map((tag, idx) => {
-    const x = 80 + (idx * 50) % (width - 160);
-    const y = -40 - (idx * 60);
+    const bw = Math.round(tag.w * scale);
+    const bh = Math.round(tag.h * scale);
+    const spawnX = Math.max(bw / 2 + 10, Math.min(width - bw / 2 - 10, 40 + (idx * (isMobile ? 32 : 75)) % Math.max(60, width - bw)));
+    const spawnY = -20 - (idx * (isMobile ? 22 : 35));
 
-    const body = Bodies.rectangle(x, y, tag.w, tag.h, {
-      chamfer: { radius: 14 },
-      restitution: 0.72, // Bouncy!
-      friction: 0.1,
+    const body = Bodies.rectangle(spawnX, spawnY, bw, bh, {
+      chamfer: { radius: isMobile ? 10 : 14 },
+      restitution: 0.65,
+      friction: 0.12,
       density: 0.002,
       render: {
         fillStyle: tag.color,
         strokeStyle: '#000000',
-        lineWidth: 2.5
+        lineWidth: 2
       }
     });
 
-    body.customData = tag;
+    body.customData = { ...tag, bw, bh };
     return body;
   });
 
@@ -318,7 +338,7 @@ function initMatterPhysics() {
   // Custom label drawing over Matter.js bodies
   Events.on(render, 'afterRender', () => {
     const ctx = render.context;
-    ctx.font = 'bold 12px "Space Grotesk", sans-serif';
+    ctx.font = isMobile ? 'bold 9.5px "Space Grotesk", sans-serif' : 'bold 11.5px "Space Grotesk", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
